@@ -210,7 +210,7 @@ function showResults() {
     .join(", ");
 
   app.innerHTML = `
-    <h2>Junior High Geography SRS</h2>
+    <h2>Public Studies SRS</h2>
     <p>Nickname: ${state.nickname}</p>
     <p>Date: ${now.toLocaleDateString()}</p>
     <p>Time: ${now.toLocaleTimeString()}</p>
