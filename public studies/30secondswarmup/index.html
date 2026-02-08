@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>30 Second Challenge</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="container">
+
+    <h1>30 Second Challenge</h1>
+
+    <!-- SETUP SCREEN -->
+    <div id="start-screen">
+      <h2>Select Chapters</h2>
+
+      <form id="setup-form">
+        <div id="chapter-selection"></div>
+
+        <button type="submit" id="start-game-btn">
+          Start Game
+        </button>
+      </form>
+    </div>
+
+    <!-- GAME SCREEN -->
+    <div id="game-screen" class="hidden">
+
+      <!-- READY SCREEN -->
+      <div id="ready-screen" class="hidden">
+        <h2 id="ready-text"></h2>
+        <button id="start-round-btn">Start Round</button>
+      </div>
+
+      <!-- TIMER -->
+      <div id="timer-container" class="hidden">
+        <h3>
+          Time Left: <span id="time-left">30</span> seconds
+        </h3>
+      </div>
+
+      <!-- WORDS -->
+      <div id="word-display-container"></div>
+
+      <!-- ROUND REVIEW -->
+      <div id="review-screen" class="hidden">
+        <div class="times-up-message">
+          ⏰ TIME’S UP
+        </div>
+        <h2>
+          Correct: <span id="review-score">0</span>
+        </h2>
+        <button id="review-ok-btn">OK</button>
+      </div>
+
+      <!-- FINAL REVIEW -->
+<div id="final-review" class="hidden">
+  <div class="times-up-message">
+    🎉 Game Over
+  </div>
+</div>
+
+
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
