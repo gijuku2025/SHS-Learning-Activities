@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Thinking Tool</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  padding: 20px;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+h1 {
+  text-align: center;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-top: 15px;
+}
+
+textarea {
+  width: 100%;
+  height: 70px;
+  margin-top: 5px;
+}
+
+select {
+  width: 100%;
+  margin-top: 5px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#outputScreen, #diagramScreen {
+  display: none;
+}
+
+.box {
+  border: 2px solid #333;
+  padding: 10px;
+  border-radius: 6px;
+  background: #fafafa;
+  margin: 10px;
+  width: 200px;
+}
+
+.diagram {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrow {
+  font-size: 24px;
+  margin: 0 10px;
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="inputScreen">
+<h1>Argument Builder</h1>
+<p>Choose a sentence starter or write your own.</p>
+
+<label>Claim</label>
+<select onchange="insertStarter(this,'claim')">
+<option value="">Choose a starter...</option>
+<option value="I think that ">I think that …</option>
+<option value="I believe that ">I believe that …</option>
+<option value="In my opinion, ">In my opinion, …</option>
+</select>
+<textarea id="claim"></textarea>
+
+<label>Reason 1</label>
+<select onchange="insertStarter(this,'reason1')">
+<option value="">Choose a starter...</option>
+<option value="One reason is that ">One reason is that …</option>
+<option value="First, ">First, …</option>
+<option value="This is true because ">This is true because …</option>
+</select>
+<textarea id="reason1"></textarea>
+
+<label>Evidence 1</label>
+<select onchange="insertStarter(this,'evidence1')">
+<option value="">Choose a starter...</option>
+<option value="For example, ">For example, …</option>
+<option value="According to the text, ">According to the text, …</option>
+<option value="This shows that ">This shows that …</option>
+</select>
+<textarea id="evidence1"></textarea>
+
+<label>Reason 2</label>
+<select onchange="insertStarter(this,'reason2')">
+<option value="">Choose a starter...</option>
+<option value="Another reason is that ">Another reason is that …</option>
+<option value="Second, ">Second, …</option>
+<option value="Also, ">Also, …</option>
+</select>
+<textarea id="reason2"></textarea>
+
+<label>Evidence 2</label>
+<select onchange="insertStarter(this,'evidence2')">
+<option value="">Choose a starter...</option>
+<option value="For example, ">For example, …</option>
+<option value="Data shows that ">Data shows that …</option>
+<option value="This proves that ">This proves that …</option>
+</select>
+<textarea id="evidence2"></textarea>
+
+<label>Counterargument</label>
+<select onchange="insertStarter(this,'counter')">
+<option value="">Choose a starter...</option>
+<option value="Some people think that ">Some people think that …</option>
+<option value="Others believe that ">Others believe that …</option>
+<option value="It is often said that ">It is often said that …</option>
+</select>
+<textarea id="counter"></textarea>
+
+<label>Rebuttal</label>
+<select onchange="insertStarter(this,'rebuttal')">
+<option value="">Choose a starter...</option>
+<option value="However, I believe that ">However, I believe that …</option>
+<option value="I disagree because ">I disagree because …</option>
+<option value="This opinion is weak because ">This opinion is weak because …</option>
+</select>
+<textarea id="rebuttal"></textarea>
+
+<button onclick="showOutput()">Text View</button>
+<button onclick="showDiagram()">Diagram View</button>
+<button onclick="resetForm()">Reset</button>
+
+</div>
+
+<div class="container" id="outputScreen">
+<h1>My Argument (Text)</h1>
+<pre id="outputText"></pre>
+<button onclick="goBack()">Edit</button>
+</div>
+
+<div class="container" id="diagramScreen">
+<h1>My Argument (Diagram)</h1>
+
+<div class="diagram">
+  <div class="box" id="dClaim"></div>
+
+  <div class="row">
+    <div class="box" id="dReason1"></div>
+    <div class="arrow">→</div>
+    <div class="box" id="dEvidence1"></div>
+  </div>
+
+  <div class="row">
+    <div class="box" id="dReason2"></div>
+    <div class="arrow">→</div>
+    <div class="box" id="dEvidence2"></div>
+  </div>
+
+  <div class="row">
+    <div class="box" id="dCounter"></div>
+    <div class="arrow">→</div>
+    <div class="box" id="dRebuttal"></div>
+  </div>
+</div>
+
+<button onclick="goBack()">Edit</button>
+</div>
+
+<script>
+function insertStarter(selectBox, textareaId) {
+  let t = document.getElementById(textareaId);
+  if (t.value === "") t.value = selectBox.value;
+  selectBox.selectedIndex = 0;
+}
+
+function showOutput() {
+  let text =
+`CLAIM:
+${claim.value}
+
+REASON 1:
+${reason1.value}
+
+EVIDENCE 1:
+${evidence1.value}
+
+REASON 2:
+${reason2.value}
+
+EVIDENCE 2:
+${evidence2.value}
+
+COUNTERARGUMENT:
+${counter.value}
+
+REBUTTAL:
+${rebuttal.value}`;
+  outputText.textContent = text;
+  inputScreen.style.display="none";
+  outputScreen.style.display="block";
+}
+
+function showDiagram() {
+  dClaim.textContent = "Claim: " + claim.value;
+  dReason1.textContent = "Reason 1: " + reason1.value;
+  dEvidence1.textContent = "Evidence 1: " + evidence1.value;
+  dReason2.textContent = "Reason 2: " + reason2.value;
+  dEvidence2.textContent = "Evidence 2: " + evidence2.value;
+  dCounter.textContent = "Counter: " + counter.value;
+  dRebuttal.textContent = "Rebuttal: " + rebuttal.value;
+
+  inputScreen.style.display="none";
+  diagramScreen.style.display="block";
+}
+
+function goBack() {
+  outputScreen.style.display="none";
+  diagramScreen.style.display="none";
+  inputScreen.style.display="block";
+}
+	
+  function resetForm() {
+  if (!confirm("Are you sure you want to start over?")) return;
+
+  claim.value = "";
+  reason1.value = "";
+  evidence1.value = "";
+  reason2.value = "";
+  evidence2.value = "";
+  counter.value = "";
+  rebuttal.value = "";
+
+  outputScreen.style.display = "none";
+  diagramScreen.style.display = "none";
+  inputScreen.style.display = "block";
+}
+
+	
+</script>
+
+</body>
+</html>
