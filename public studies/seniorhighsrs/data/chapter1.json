@@ -1,0 +1,143 @@
+
+[
+  {
+    "id": "ch1_earth",
+    "en": "Earth",
+    "jp": "地球",
+    "kana": "ちきゅう",
+    "example": "This is the Earth."
+  },
+  {
+    "id": "ch1_land",
+    "en": "land",
+    "jp": "陸",
+    "kana": "りく",
+    "example": "The Earth has land, and the Earth has sea."
+  },
+  {
+    "id": "ch1_sea",
+    "en": "sea",
+    "jp": "海",
+    "kana": "うみ",
+    "example": "There is more sea than land."
+  },
+  {
+    "id": "ch1_ocean",
+    "en": "ocean",
+    "jp": "大洋",
+    "kana": "たいよう",
+    "example": ""
+  },
+  {
+    "id": "ch1_continent",
+    "en": "continent",
+    "jp": "大陸",
+    "kana": "たいりく",
+    "example": "Continents are large areas of land."
+  },
+  {
+    "id": "ch1_large_area",
+    "en": "large area",
+    "jp": "広い範囲",
+    "kana": "ひろいはんい",
+    "example": "Oceans are large areas of sea."
+  },
+  {
+    "id": "ch1_region",
+    "en": "region",
+    "jp": "州",
+    "kana": "しゅう",
+    "example": "Regions are groups of continents and islands."
+  },
+  {
+    "id": "ch1_island",
+    "en": "island",
+    "jp": "島",
+    "kana": "しま",
+    "example": "Islands are small areas of land."
+  },
+  {
+    "id": "ch1_island_country",
+    "en": "island country",
+    "jp": "島国",
+    "kana": "しまぐに",
+    "example": "Japan is an island country."
+  },
+  {
+    "id": "ch1_landlocked_country",
+    "en": "landlocked country",
+    "jp": "内陸国",
+    "kana": "ないりくこく",
+    "example": "It is a landlocked country."
+  },
+  {
+    "id": "ch1_highest_place",
+    "en": "highest place",
+    "jp": "最高点",
+    "kana": "さいこうてん",
+    "example": "The highest place on the Earth is the top of Mount Everest."
+  },
+  {
+    "id": "ch1_lowest_place",
+    "en": "lowest place",
+    "jp": "最低点",
+    "kana": "さいていてん",
+    "example": "The lowest place on the Earth is the bottom of Mariana Trench."
+  },
+  {
+    "id": "ch1_top",
+    "en": "top",
+    "jp": "一番上",
+    "kana": "いちばんうえ",
+    "example": "The highest place on the Earth is the top of Mount Everest."
+  },
+  {
+    "id": "ch1_bottom",
+    "en": "bottom",
+    "jp": "一番下",
+    "kana": "いちばんした",
+    "example": "The lowest place on the Earth is the bottom of Mariana Trench."
+  },
+  {
+    "id": "ch1_round",
+    "en": "round",
+    "jp": "丸い",
+    "kana": "まるい",
+    "example": "No, it looks round and smooth because it is very big."
+  },
+  {
+    "id": "ch1_smooth",
+    "en": "smooth",
+    "jp": "なめらか",
+    "kana": "なめらか",
+    "example": "No, it looks round and smooth because it is very big."
+  },
+  {
+    "id": "ch1_tall_mountains",
+    "en": "tall mountains",
+    "jp": "高い山",
+    "kana": "たかいやま",
+    "example": "There are tall mountains in Antarctica."
+  },
+  {
+    "id": "ch1_thick_ice",
+    "en": "thick ice",
+    "jp": "厚い氷",
+    "kana": "あついこおり",
+    "example": "Thick ice covers Antarctica."
+  },
+  {
+    "id": "ch1_average",
+    "en": "average",
+    "jp": "平均",
+    "kana": "へいきん",
+    "example": "The ice is 2,400 meters thick. (This is the average.)"
+  },
+  {
+    "id": "ch1_south_pole",
+    "en": "South Pole",
+    "jp": "南極",
+    "kana": "なんきょく",
+    "example": "The ice is very thick under the South Pole."
+  }
+]
