@@ -1,7 +1,9 @@
 const app = document.getElementById("app");
 
-const CHAPTER_FILES = ["chapter1", "chapter2", "chapter3", "chapter4", "chapter5", "chapter6", "chapter7", "chapter8", "chapter9", "chapter10", "chapter11", "chapter12", "chapter13", "chapter14", "chapter15", "chapter16", "chapter17", "chapter18", "chapter19", "chapter20", "chapter21", "chapter22", "chapter23", "chapter24", "chapter25", "chapter26", "chapter27", "chapter28", "chapter29", "chapter30", "chapter31", "chapter32", "chapter33", "chapter34", "chapter35", "chapter36", "chapter37", "chapter38", "chapter39", "chapter40"]; // add more later
+const CHAPTER_FILES = ["chapter1","chapter2","chapter3","chapter4","chapter5","chapter6","chapter7","chapter8","chapter9","chapter10","chapter11","chapter12","chapter13","chapter14","chapter15","chapter16","chapter17","chapter18","chapter19","chapter20","chapter21","chapter22","chapter23","chapter24","chapter25","chapter26","chapter27","chapter28","chapter29","chapter30","chapter31","chapter32","chapter33","chapter34","chapter35","chapter36","chapter37","chapter38","chapter39","chapter40"];
 const MAX_NEW_PER_DAY = 10;
+
+let failedThisSession = new Set();
 
 let state = {
   nickname: localStorage.getItem("nickname"),
@@ -12,7 +14,8 @@ let state = {
 };
 
 let vocab = [];
-let queue = [];
+let newQueue = [];
+let reviewQueue = [];
 let current = null;
 let direction = null;
 
@@ -67,21 +70,15 @@ async function loadVocab() {
 }
 
 function showChapterScreen() {
-  let html = `<h2>Select chapters</h2>`;
-  html += `<div class="chapter-grid">`;
-
+  let html = `<h2>Select chapters</h2><div class="chapter-grid">`;
   CHAPTER_FILES.forEach((ch, i) => {
     const num = i + 1;
     const selected = state.activeChapters.includes(ch) ? "selected" : "";
     html += `<div class="chapter-tile ${selected}" onclick="toggleChapter('${ch}', this)">${num}</div>`;
   });
-
-  html += `</div>`;
-  html += `<button onclick="startStudy()">Save & Start Study</button>`;
+  html += `</div><button onclick="startStudy()">Save & Start Study</button>`;
   app.innerHTML = html;
 }
-
-
 
 function toggleChapter(ch, el) {
   if (state.activeChapters.includes(ch)) {
@@ -94,47 +91,57 @@ function toggleChapter(ch, el) {
   save();
 }
 
-
 async function startStudy() {
   if (state.activeChapters.length === 0) return alert("Select at least one chapter.");
-
   resetDailyCountIfNeeded();
+  failedThisSession = new Set();
+  state.stats = { correct: 0, wrong: 0, new: 0, review: 0 };
   await loadVocab();
-  buildQueue();
+  buildQueues();
   nextQuestion();
 }
 
-function buildQueue() {
-  queue = [];
+/* ======================
+   SRS CORE LOGIC
+====================== */
+
+function buildQueues() {
+  newQueue = [];
+  reviewQueue = [];
   const now = Date.now();
 
   for (let item of vocab) {
     const p = state.progress[item.id];
+
     if (!p) {
       if (state.todayNewCount < MAX_NEW_PER_DAY) {
-        queue.push({ item, type: "new" });
+        newQueue.push(item);
       }
     } else {
       if (now >= p.nextReview) {
-        queue.push({ item, type: "review" });
+        reviewQueue.push(item);
       }
     }
   }
 
-  shuffle(queue);
-}
-
-function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
+  shuffle(newQueue);
+  shuffle(reviewQueue);
 }
 
 function nextQuestion() {
-  if (queue.length === 0) return showResults();
-  const q = queue.shift();
-  current = q.item;
+  if (reviewQueue.length === 0 && newQueue.length === 0) {
+    return showResults();
+  }
+
+  if (reviewQueue.length > 0) {
+    current = reviewQueue.shift();
+    state.stats.review++;
+  } else {
+    current = newQueue.shift();
+    state.stats.new++;
+    state.todayNewCount++;
+  }
+
   direction = Math.random() < 0.5 ? "en-jp" : "jp-en";
 
   const prompt = direction === "en-jp" ? current.en : current.jp;
@@ -160,38 +167,43 @@ function submitAnswer() {
 
   if (direction === "en-jp") {
     const a = normalizeJP(input);
-    const jp = normalizeJP(current.jp);
-    const kana = normalizeJP(current.kana);
-    correct = (a === jp || a === kana);
+    correct = (a === normalizeJP(current.jp) || a === normalizeJP(current.kana));
   } else {
     correct = input.toLowerCase() === current.en.toLowerCase();
   }
 
-  if (!state.progress[current.id]) {
-    state.progress[current.id] = { interval: 1, nextReview: Date.now() };
-    state.todayNewCount++;
-    state.stats.new++;
-  } else {
-    state.stats.review++;
+  let p = state.progress[current.id];
+
+  if (!p) {
+    p = { interval: 1, ease: 2.5, nextReview: Date.now() };
+    state.progress[current.id] = p;
   }
 
   if (correct) {
     state.stats.correct++;
-    state.progress[current.id].interval *= 2;
-  } else {
+    p.interval = Math.round(p.interval * p.ease);
+    p.ease = Math.min(p.ease + 0.15, 3);
+    } else {
     state.stats.wrong++;
-    state.progress[current.id].interval = 1;
+    p.interval = 1;
+    p.ease = Math.max(2, p.ease - 0.2);
+
+    // only requeue once per session
+    if (!failedThisSession.has(current.id)) {
+      failedThisSession.add(current.id);
+      reviewQueue.push(current);
+    }
   }
 
-  state.progress[current.id].nextReview =
-    Date.now() + state.progress[current.id].interval * 86400000;
+
+  p.nextReview = Date.now() + p.interval * 86400000;
 
   save();
   saveDailyCount();
-  showFeedback(correct, input);
+  showFeedback(correct);
 }
 
-function showFeedback(correct, input) {
+function showFeedback(correct) {
   app.innerHTML = `
     <h3>${correct ? "✔ Correct!" : "✘ Incorrect"}</h3>
     <div>${current.en} = ${current.jp}</div>
@@ -203,14 +215,10 @@ function showFeedback(correct, input) {
 
 function showResults() {
   const now = new Date();
-
-  // Convert ["chapter1","chapter5","chapter7"] → "1, 5, 7"
-  const chapterNumbers = state.activeChapters
-    .map(ch => ch.replace("chapter", ""))
-    .join(", ");
+  const chapterNumbers = state.activeChapters.map(ch => ch.replace("chapter", "")).join(", ");
 
   app.innerHTML = `
-    <h2>Public Studies SRS</h2>
+    <h2>Junior High Geography SRS</h2>
     <p>Nickname: ${state.nickname}</p>
     <p>Date: ${now.toLocaleDateString()}</p>
     <p>Time: ${now.toLocaleTimeString()}</p>
@@ -222,6 +230,13 @@ function showResults() {
     <p>Accuracy: ${Math.round(state.stats.correct / (state.stats.correct + state.stats.wrong) * 100) || 0}%</p>
     <p><strong>Screenshot this screen and send it to your teacher.</strong></p>
   `;
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
 }
 
 if (!state.nickname) {
