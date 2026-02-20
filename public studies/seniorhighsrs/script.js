@@ -86,7 +86,7 @@ function showChapterScreen() {
     <div class="center">
       <div class="card">
         <h2 class="heading">Welcome to Smart Review, ${state.nickname}</h2>
-       <h2 class="heading">Junior High Geography</h2>     
+       <h2 class="heading">Public Studies</h2>     
        <p style="margin:5px 0;">Select chapters</p>
 
         <div class="chapter-grid">
