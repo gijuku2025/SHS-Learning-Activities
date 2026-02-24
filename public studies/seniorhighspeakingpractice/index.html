@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Speaking Practice</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2 id="header"></h2>
+<p id="subheader"></p>
+
+<div id="menu"></div>
+
+<div id="card" class="hidden">
+  <p id="progress"></p>
+
+  <!-- ⭐ Sentence Block -->
+  <div class="sentence-block">
+    <p id="sentence"></p>
+  </div>
+
+  <!-- 🎤 Speak Block -->
+  <div class="speak-block">
+    <button id="playAudio">🔊 Listen</button>
+
+    <textarea id="speechInput"
+      placeholder="Tap here, then tap the mic and read the sentence."></textarea>
+  </div>
+
+  <!-- ▶ Control Block -->
+  <div class="control-block">
+    <button id="checkBtn" disabled>🛑 Stop & Check</button>
+    <button id="retryBtn">🔁 Try Again</button>
+    <button id="nextBtn" disabled>▶ Next</button>
+  </div>
+
+  <!-- 🧠 Feedback Block -->
+  <div class="feedback-block">
+    <div id="feedback"></div>
+  </div>
+</div>
+
+<!-- ✅ Legend is OUTSIDE the card and hidden by default -->
+<div id="legend" class="hidden">
+  <span class="correct">Correct（正しい）</span>　
+  <span class="close">Close（だいたい合っている）</span>　
+  <span class="wrong">Different（ちがう）</span>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
