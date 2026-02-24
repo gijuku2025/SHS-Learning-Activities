@@ -6,63 +6,256 @@
         "1-1": {
           "title": "Humans and Public Space",
           "sentences": [
-            { "text": "Some people say the whole society is happiest when individuals pursue their own happiness.", "audio": "audio/chapter1/c1s1_1.mp3" },
-            { "text": "Others say individuals are happiest when they sacrifice their own happiness for the happiness of the whole society.", "audio": "audio/chapter1/c1s1_2.mp3" },
-            { "text": "Which of these ideas is true?", "audio": "audio/chapter1/c1s1_3.mp3" },
-            { "text": "When a 'conflict' occurs, people try to reach an 'agreement'.", "audio": "audio/chapter1/c1s1_4.mp3" },
-            { "text": "This allows people with different ideas to live together and pursue their own happiness at the same time.", "audio": "audio/chapter1/c1s1_5.mp3" },
-            { "text": "When they do this, they must ask 'What is the greatest good to society?' and 'Can everyone participate in reaching an agreement'.", "audio": "audio/chapter1/c1s1_6.mp3" },
-            { "text": "They use concepts such as 'efficiency' and 'fairness' to evaluate decisions and the decision-making process.", "audio": "audio/chapter1/c1s1_7.mp3" }
+            {
+              "text": "Some people say the whole society is happiest when individuals pursue their own happiness.",
+              "audio": "audio/chapter1/c1s1_1.mp3"
+            },
+            {
+              "text": "Others say individuals are happiest when they sacrifice their own happiness for the happiness of the whole society.",
+              "audio": "audio/chapter1/c1s1_2.mp3"
+            },
+            {
+              "text": "Which of these ideas is true?",
+              "audio": "audio/chapter1/c1s1_3.mp3"
+            },
+            {
+              "text": "When a 'conflict' occurs, people try to reach an 'agreement'.",
+              "audio": "audio/chapter1/c1s1_4.mp3"
+            },
+            {
+              "text": "This allows people with different ideas to live together and pursue their own happiness at the same time.",
+              "audio": "audio/chapter1/c1s1_5.mp3"
+            },
+            {
+              "text": "When they do this, they must ask 'What is the greatest good to society?' and 'Can everyone participate in reaching an agreement'.",
+              "audio": "audio/chapter1/c1s1_6.mp3"
+            },
+            {
+              "text": "They use concepts such as 'efficiency' and 'fairness' to evaluate decisions and the decision-making process.",
+              "audio": "audio/chapter1/c1s1_7.mp3"
+            }
           ]
         },
         "1-2": {
           "title": "Creating a Public Space",
           "sentences": [
-            { "text": "People all want to be happy, so they must cooperate in creating a 'public space' that makes this possible.", "audio": "audio/chapter1/c1s2_1.mp3" },
-            { "text": "We must learn to live in the public space, keeping in mind both the interests of 'personal happiness' and 'the happiness of the whole society'.", "audio": "audio/chapter1/c1s2_2.mp3" },
-            { "text": "In order to do this, we need to think about who we are, and what society is.", "audio": "audio/chapter1/c1s2_3.mp3" }
+            {
+              "text": "People all want to be happy, so they must cooperate in creating a 'public space' that makes this possible.",
+              "audio": "audio/chapter1/c1s2_1.mp3"
+            },
+            {
+              "text": "We must learn to live in the public space, keeping in mind both the interests of 'personal happiness' and 'the happiness of the whole society'.",
+              "audio": "audio/chapter1/c1s2_2.mp3"
+            },
+            {
+              "text": "In order to do this, we need to think about who we are, and what society is.",
+              "audio": "audio/chapter1/c1s2_3.mp3"
+            }
           ]
         },
         "1-3": {
           "title": "The Meaning of Adolescence",
           "sentences": [
-            { "text": "Who are we? We are adolescents.", "audio": "audio/chapter1/c1s3_1.mp3" },
-            { "text": "The word 'adolescence' comes from Latin and means 'to grow up'.", "audio": "audio/chapter1/c1s3_2.mp3" },
-            { "text": "The psychologist G.S. Hall described adolescence as a time of 'storm and stress'.", "audio": "audio/chapter1/c1s3_3.mp3" },
-            { "text": "Our bodies and minds grow rapidly, and our environment changes.", "audio": "audio/chapter1/c1s3_4.mp3" },
-            { "text": "This can make our feelings unstable.", "audio": "audio/chapter1/c1s3_5.mp3" }
+            {
+              "text": "Who are we? We are adolescents.",
+              "audio": "audio/chapter1/c1s3_1.mp3"
+            },
+            {
+              "text": "The word 'adolescence' comes from Latin and means 'to grow up'.",
+              "audio": "audio/chapter1/c1s3_2.mp3"
+            },
+            {
+              "text": "The psychologist G.S. Hall described adolescence as a time of 'storm and stress'.",
+              "audio": "audio/chapter1/c1s3_3.mp3"
+            },
+            {
+              "text": "Our bodies and minds grow rapidly, and our environment changes.",
+              "audio": "audio/chapter1/c1s3_4.mp3"
+            },
+            {
+              "text": "This can make our feelings unstable.",
+              "audio": "audio/chapter1/c1s3_5.mp3"
+            }
           ]
         },
         "1-4": {
           "title": "Adolescence and Identity",
           "sentences": [
-            { "text": "Adolescence is a time of 'psychological weaning'.", "audio": "audio/chapter1/c1s4_1.mp3" },
-            { "text": "This is a time when we become independent from our parents.", "audio": "audio/chapter1/c1s4_2.mp3" },
-            { "text": "It is also a time of 'marginal man'.", "audio": "audio/chapter1/c1s4_3.mp3" },
-            { "text": "This means we are no longer children, but we are not yet adults.", "audio": "audio/chapter1/c1s4_4.mp3" },
-            { "text": "During this time, we try to find out who we are. This is called 'identity'.", "audio": "audio/chapter1/c1s4_5.mp3" },
-            { "text": "The psychologist Erikson said that finding our identity is the most important task of adolescence.", "audio": "audio/chapter1/c1s4_6.mp3" }
+            {
+              "text": "Adolescence is a time of 'psychological weaning'.",
+              "audio": "audio/chapter1/c1s4_1.mp3"
+            },
+            {
+              "text": "This is a time when we become independent from our parents.",
+              "audio": "audio/chapter1/c1s4_2.mp3"
+            },
+            {
+              "text": "It is also a time of 'marginal man'.",
+              "audio": "audio/chapter1/c1s4_3.mp3"
+            },
+            {
+              "text": "This means we are no longer children, but we are not yet adults.",
+              "audio": "audio/chapter1/c1s4_4.mp3"
+            },
+            {
+              "text": "During this time, we try to find out who we are. This is called 'identity'.",
+              "audio": "audio/chapter1/c1s4_5.mp3"
+            },
+            {
+              "text": "The psychologist Erikson said that finding our identity is the most important task of adolescence.",
+              "audio": "audio/chapter1/c1s4_6.mp3"
+            }
           ]
         },
         "1-5": {
           "title": "The Moratorium",
           "sentences": [
-            { "text": "The psychologist Erikson called adolescence a 'moratorium'.", "audio": "audio/chapter1/c1s5_1.mp3" },
-            { "text": "This means a time when we do not have adult responsibilities.", "audio": "audio/chapter1/c1s5_2.mp3" },
-            { "text": "In the past, this time was very short.", "audio": "audio/chapter1/c1s5_3.mp3" },
-            { "text": "People became adults at a young age.", "audio": "audio/chapter1/c1s5_4.mp3" },
-            { "text": "Now, the moratorium is getting longer because society is more complex.", "audio": "audio/chapter1/c1s5_5.mp3" },
-            { "text": "We need more time to learn the skills we need to be adults.", "audio": "audio/chapter1/c1s5_6.mp3" }
+            {
+              "text": "The psychologist Erikson called adolescence a 'moratorium'.",
+              "audio": "audio/chapter1/c1s5_1.mp3"
+            },
+            {
+              "text": "This means a time when we do not have adult responsibilities.",
+              "audio": "audio/chapter1/c1s5_2.mp3"
+            },
+            {
+              "text": "In the past, this time was very short.",
+              "audio": "audio/chapter1/c1s5_3.mp3"
+            },
+            {
+              "text": "People became adults at a young age.",
+              "audio": "audio/chapter1/c1s5_4.mp3"
+            },
+            {
+              "text": "Now, the moratorium is getting longer because society is more complex.",
+              "audio": "audio/chapter1/c1s5_5.mp3"
+            },
+            {
+              "text": "We need more time to learn the skills we need to be adults.",
+              "audio": "audio/chapter1/c1s5_6.mp3"
+            }
           ]
         },
         "1-6": {
           "title": "Adolescence and the Law",
           "sentences": [
-            { "text": "The law was changed in April 2022. People come of age at eighteen instead of twenty.", "audio": "audio/chapter1/c1s6_1.mp3" },
-            { "text": "However, the age of legal responsibility is not always the same.", "audio": "audio/chapter1/c1s6_2.mp3" },
-            { "text": "At 14 years: You can be punished for a crime.", "audio": "audio/chapter1/c1s6_3.mp3" },
-            { "text": "At 15 years: You complete compulsory education and you can be employed.", "audio": "audio/chapter1/c1s6_4.mp3" },
-            { "text": "At 18 years: You are recognized as an adult, can get married, and can vote.", "audio": "audio/chapter1/c1s6_5.mp3" }
+            {
+              "text": "The law was changed in April 2022. People come of age at eighteen instead of twenty.",
+              "audio": "audio/chapter1/c1s6_1.mp3"
+            },
+            {
+              "text": "However, the age of legal responsibility is not always the same.",
+              "audio": "audio/chapter1/c1s6_2.mp3"
+            },
+            {
+              "text": "At 14 years: You can be punished for a crime.",
+              "audio": "audio/chapter1/c1s6_3.mp3"
+            },
+            {
+              "text": "At 15 years: You complete compulsory education and you can be employed.",
+              "audio": "audio/chapter1/c1s6_4.mp3"
+            },
+            {
+              "text": "At 18 years: You are recognized as an adult, can get married, and can vote.",
+              "audio": "audio/chapter1/c1s6_5.mp3"
+            }
+          ]
+        }
+      }
+    },
+    "2": {
+      "title": "Senior High Public Studies",
+      "sections": {
+        "2-1": {
+          "title": "Self-awareness and Independence",
+          "sentences": [
+            {
+              "text": "Acceleration in human development and early sexual maturity has resulted in adolescence beginning at an increasingly young age.",
+              "audio": "audio/chapter2/c2s1_1.mp3"
+            },
+            {
+              "text": "The question is whether this is accompanied by psychological maturity.",
+              "audio": "audio/chapter2/c2s1_2.mp3"
+            },
+            {
+              "text": "Psychological changes in adolescence are seen when we begin to experience romantic and sexual desires, together with a sense of self-awareness.",
+              "audio": "audio/chapter2/c2s1_3.mp3"
+            },
+            {
+              "text": "Self-awareness makes us distance ourselves from our parents and establish ourselves as individuals with attitudes, values, and patterns of behavior that are different from our parents.",
+              "audio": "audio/chapter2/c2s1_4.mp3"
+            },
+            {
+              "text": "This gives us the desire to make our own decisions and drives us to resent the restrictions placed on us by parents, teachers, and other systems of established authority.",
+              "audio": "audio/chapter2/c2s1_5.mp3"
+            }
+          ]
+        },
+        "2-2": {
+          "title": "The Rebellious Phases and Adolescent Crisis",
+          "sentences": [
+            {
+              "text": "This is an assertiveness that first appears in infancy as the first rebellious phase and appears again in adolescence as the second rebellious phase.",
+              "audio": "audio/chapter2/c2s2_1.mp3"
+            },
+            {
+              "text": "These are the first steps we take in becoming independent of our parents and other figures of authority in our lives.",
+              "audio": "audio/chapter2/c2s2_2.mp3"
+            },
+            {
+              "text": "This part of our lives is often referred to as the stage of adolescent crisis when we can be in danger of losing sight of ourselves.",
+              "audio": "audio/chapter2/c2s2_3.mp3"
+            }
+          ]
+        },
+        "2-3": {
+          "title": "Dealing with Anxiety and Instability",
+          "sentences": [
+            {
+              "text": "Adolescence can be an opportunity to break free of childhood and create a new identity.",
+              "audio": "audio/chapter2/c2s3_1.mp3"
+            },
+            {
+              "text": "Some adolescents don't appear to go through a time of crisis, which is called a stable adolescence.",
+              "audio": "audio/chapter2/c2s3_2.mp3"
+            },
+            {
+              "text": "However, many adolescents are easily hurt and experience emotional instability, swings in emotion, loneliness, anxiety, and feelings of inferiority.",
+              "audio": "audio/chapter2/c2s3_3.mp3"
+            },
+            {
+              "text": "It is normal to have serious worries about our bodies, personalities, academic studies, friends, and the opposite sex.",
+              "audio": "audio/chapter2/c2s3_4.mp3"
+            },
+            {
+              "text": "Worrying can be a sign of strong sensitivity, and overcoming these worries helps develop strength of character.",
+              "audio": "audio/chapter2/c2s3_5.mp3"
+            },
+            {
+              "text": "Having a trusted person to talk to can be very helpful, and high school is a time when you may find a life-long friend.",
+              "audio": "audio/chapter2/c2s3_6.mp3"
+            }
+          ]
+        },
+        "2-4": {
+          "title": "The Ego and Defence Mechanisms",
+          "sentences": [
+            {
+              "text": "Adolescence is when we learn adaptive behaviors that enable us to cope with worries and control our emotions.",
+              "audio": "audio/chapter2/c2s4_1.mp3"
+            },
+            {
+              "text": "Things will not always go as you wish, and you may experience frustration and conflict.",
+              "audio": "audio/chapter2/c2s4_2.mp3"
+            },
+            {
+              "text": "In these times, we often resort to defense mechanisms, which are ways we deal with emotional problems to avoid getting hurt.",
+              "audio": "audio/chapter2/c2s4_3.mp3"
+            },
+            {
+              "text": "These mechanisms, such as repression, rationalization, and sublimation, help us overcome failures and disappointments.",
+              "audio": "audio/chapter2/c2s4_4.mp3"
+            }
           ]
         }
       }
