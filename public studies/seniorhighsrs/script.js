@@ -89,7 +89,7 @@ function showChapterScreen() {
     <div class="center">
       <div class="card">
         <h2 class="heading">Welcome to Smart Review, ${state.nickname}</h2>
-        <h2 class="heading">Junior High ${SUBJECT_LABEL}</h2>   
+        <h2 class="heading">Public Studies</h2>   
         <p style="margin:5px 0;">Select chapters</p>
 
         
@@ -599,7 +599,7 @@ const seconds = totalSeconds % 60;
     <div class="center">
       <div class="card">
 
-        <h2>Smart Review – Junior High ${SUBJECT_LABEL}</h2>
+        <h2>Smart Review – Public Studies</h2>
         
         <!-- student name stays centered -->
         <h3 style="text-align:center;">${state.nickname}</h3>
