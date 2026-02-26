@@ -1,4 +1,6 @@
 const app = document.getElementById("app");
+const SUBJECT = "geography"; // change to "geometry" or "civics" in other copies
+const SUBJECT_LABEL = SUBJECT.charAt(0).toUpperCase() + SUBJECT.slice(1);
 
 const CHAPTER_FILES = [
  "chapter1","chapter2","chapter3","chapter4","chapter5","chapter6","chapter7","chapter8","chapter9","chapter10",
@@ -20,9 +22,9 @@ let sessionStartTime = null;
 
 let state = {
   nickname: localStorage.getItem("nickname"),
-  activeChapters: JSON.parse(localStorage.getItem("activeChapters") || "[]"),
-  progress: JSON.parse(localStorage.getItem("progress") || "{}"),
-  todayNewCount: Number(localStorage.getItem("todayNewCount") || 0),
+  activeChapters: JSON.parse(localStorage.getItem(SUBJECT + "_activeChapters") || "[]"),
+progress: JSON.parse(localStorage.getItem(SUBJECT + "_progress") || "{}"),
+todayNewCount: Number(localStorage.getItem(SUBJECT + "_todayNewCount") || 0),
 
   stats: { correct: 0, wrong: 0, new: 0, review: 0 }
 };
@@ -38,9 +40,9 @@ let direction = null;
 
 function save() {
   localStorage.setItem("nickname", state.nickname);
-  localStorage.setItem("activeChapters", JSON.stringify(state.activeChapters));
-  localStorage.setItem("progress", JSON.stringify(state.progress));
-  localStorage.setItem("todayNewCount", state.todayNewCount);
+  localStorage.setItem(SUBJECT + "_activeChapters", JSON.stringify(state.activeChapters));
+localStorage.setItem(SUBJECT + "_progress", JSON.stringify(state.progress));
+localStorage.setItem(SUBJECT + "_todayNewCount", state.todayNewCount);
 }
 
 function todayString() {
@@ -48,11 +50,12 @@ function todayString() {
 }
 
 function resetDailyCountIfNeeded() {
-  const last = localStorage.getItem("lastStudyDate");
+  const last = localStorage.getItem(SUBJECT + "_lastStudyDate");
   const today = todayString();
+
   if (last !== today) {
     state.todayNewCount = 0;
-    localStorage.setItem("lastStudyDate", today);
+    localStorage.setItem(SUBJECT + "_lastStudyDate", today);
   }
 }
 
@@ -86,8 +89,10 @@ function showChapterScreen() {
     <div class="center">
       <div class="card">
         <h2 class="heading">Welcome to Smart Review, ${state.nickname}</h2>
-       <h2 class="heading">Public Studies</h2>     
-       <p style="margin:5px 0;">Select chapters</p>
+        <h2 class="heading">Junior High ${SUBJECT_LABEL}</h2>   
+        <p style="margin:5px 0;">Select chapters</p>
+
+        
 
         <div class="chapter-grid">
   `;
@@ -108,7 +113,17 @@ function showChapterScreen() {
 }
 
 
+function selectAllChapters() {
+  state.activeChapters = [...CHAPTER_FILES];
+  save();
+  showChapterScreen();
+}
 
+function clearAllChapters() {
+  state.activeChapters = [];
+  save();
+  showChapterScreen();
+}
  
 
 function toggleChapter(ch, el) {
@@ -123,6 +138,21 @@ function toggleChapter(ch, el) {
 }
 
 /* ================= LOAD ================= */
+
+
+function handleEnterContinue() {
+  document.addEventListener("keydown", function(e) {
+    if (e.key !== "Enter") return;
+
+    const input = document.querySelector(".answer-input");
+    if (!input) return; // only during answer screen
+
+    const submitBtn = document.querySelector("#submitBtn");
+    if (submitBtn) submitBtn.click();
+  });
+}
+
+
 
 async function loadVocab() {
   vocab = [];
@@ -184,14 +214,23 @@ function buildQueues() {
 }
 
 
-function renderProgress() {
+
+ function renderProgress() {
+  const remaining =
+    newQueue.length + learningQueue.length + reviewQueue.length + 1;
+
   const currentNum = sessionCount + 1;
-  const total = MAX_ITEMS_PER_SESSION;
-  const percent = Math.min((sessionCount / total) * 100, 100);
+
+  const maxTotal = Math.min(
+    currentNum + remaining - 1,
+    MAX_ITEMS_PER_SESSION
+  );
+
+  const percent = Math.round((currentNum / maxTotal) * 100);
 
   return `
     <div class="progress-text">
-      Question ${currentNum} / ${total}
+      Word ${currentNum} / ${maxTotal}
     </div>
     <div class="progress-bar">
       <div class="progress-fill" style="width:${percent}%"></div>
@@ -200,6 +239,14 @@ function renderProgress() {
 }
 
 
+function getChapterNumber(item) {
+  // id looks like "ch3_earth" → extract the 3
+  const match = item.id.match(/^ch(\d+)_/);
+  return match ? match[1] : "?";
+}		
+		
+		
+		
 
 function nextQuestion() {
   if (sessionCount >= MAX_ITEMS_PER_SESSION) return showResults();
@@ -212,27 +259,38 @@ function nextQuestion() {
   direction = Math.random()<0.5?"en-jp":"jp-en";
 
   const prompt = direction==="en-jp"?current.en:current.jp;
+
+  const chapterNum = getChapterNumber(current);
   const label = direction==="en-jp"?"日本語でタイプ:":"Type the English word:";
 
   app.innerHTML = `
   <div class="center">
-    <div class="card">
+    <div class="card study-card">
 
     ${renderProgress()}
-    
+
+      <div style="font-size:0.9em; color:#6b7280; margin-bottom:6px;">
+        Chapter ${chapterNum}
+      </div>
+
       <div class="word">${prompt}</div>
       <div class="prompt-label center">${label}</div>
 
-      <input id="answer" class="answer-input" autofocus
-             onkeydown="if(event.key==='Enter') submitAnswer()">
-
+      <input id="answer" class="answer-input">
+            
       <div class="center" style="margin-top:15px;">
-        <button onclick="submitAnswer()">Submit</button>
+        <button id="submitBtn" onclick="submitAnswer()">Submit</button>
       </div>
 
     </div>
   </div>
 `;
+
+// force focus (mobile friendly)
+setTimeout(() => {
+  const input = document.getElementById("answer");
+  if (input) input.focus();
+}, 50);
 
 
 
@@ -305,7 +363,7 @@ function submitAnswer() {
         </div>
 
         <div>${current.kana || ""}</div>
-        <div class="example">${current.example || ""}</div>
+        ${current.example ? `<div class="example">${current.example}</div>` : ""}
 
         <p>We’ll try this again later.</p>
 
@@ -472,7 +530,7 @@ function showFeedback(result) {
 
   app.innerHTML = `
     <div class="center">
-      <div class="card">
+      <div class="card study-card">
 
        <h3 class="feedback-title ${
   result === "correct" ? "correct" :
@@ -495,7 +553,7 @@ function showFeedback(result) {
           </div>
         </div>
 
-        <div class="example">${current.example || ""}</div>
+        ${current.example ? `<div class="example">${current.example}</div>` : ""}
 
         <!-- instruction -->
         <div style="margin-top:20px; font-size:0.95em; color:#374151;">
@@ -541,8 +599,8 @@ const seconds = totalSeconds % 60;
     <div class="center">
       <div class="card">
 
-        <h2>Smart Review – Junior High Geography</h2>
-
+        <h2>Smart Review – Junior High ${SUBJECT_LABEL}</h2>
+        
         <!-- student name stays centered -->
         <h3 style="text-align:center;">${state.nickname}</h3>
 
@@ -580,6 +638,8 @@ function shuffle(arr){
 }
 
 /* ================= START ================= */
+
+handleEnterContinue();
 
 if (!state.nickname) showNicknameScreen();
 else showChapterScreen();
