@@ -7,7 +7,7 @@ let studyStartTime = null;
 let resultsLog = [];
 
 const nickname = localStorage.getItem("nickname") || "Student";
-const subjectTitle = "Junior High Geography";
+const subjectTitle = "Public Studies";
 const menu = document.getElementById("menu");
 const card = document.getElementById("card");
 const header = document.getElementById("header");
