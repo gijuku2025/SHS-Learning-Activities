@@ -1,143 +1,142 @@
-
 [
   {
-    "id": "ch1_earth",
-    "en": "Earth",
-    "jp": "地球",
-    "kana": "ちきゅう",
-    "example": "This is the Earth."
+    "id": "ch1_adolescence",
+    "en": "adolescence (puberty)",
+    "jp": "青年期(思春期)",
+    "kana": "せいねんき(ししゅんき)",
+    "example": "We are now living through \"adolescence\", a time in our \"life cycle\" when we go through rapid change and growth, transitioning from childhood to adulthood."
   },
   {
-    "id": "ch1_land",
-    "en": "land",
-    "jp": "陸",
-    "kana": "りく",
-    "example": "The Earth has land, and the Earth has sea."
+    "id": "ch1_sacrifice",
+    "en": "sacrifice",
+    "jp": "犠牲にする",
+    "kana": "ぎせいにする",
+    "example": "Others say individuals are happiest when they sacrifice their own happiness for the happiness of the whole society."
   },
   {
-    "id": "ch1_sea",
-    "en": "sea",
-    "jp": "海",
-    "kana": "うみ",
-    "example": "There is more sea than land."
+    "id": "ch1_efficiency",
+    "en": "efficiency",
+    "jp": "効率",
+    "kana": "こうりつ",
+    "example": "They use concepts such as \"efficiency\" and \"fairness\" to evaluate decisions and the decision-making process."
   },
   {
-    "id": "ch1_ocean",
-    "en": "ocean",
-    "jp": "大洋",
-    "kana": "たいよう",
-    "example": ""
+    "id": "ch1_fairness",
+    "en": "fairness",
+    "jp": "公平",
+    "kana": "こうへい",
+    "example": "They use concepts such as \"efficiency\" and \"fairness\" to evaluate decisions and the decision-making process."
   },
   {
-    "id": "ch1_continent",
-    "en": "continent",
-    "jp": "大陸",
-    "kana": "たいりく",
-    "example": "Continents are large areas of land."
+    "id": "ch1_transition",
+    "en": "transition",
+    "jp": "転換しながら",
+    "kana": "てんかんしながら",
+    "example": "We go through rapid change and growth, transitioning from childhood to adulthood."
   },
   {
-    "id": "ch1_large_area",
-    "en": "large area",
-    "jp": "広い範囲",
-    "kana": "ひろいはんい",
-    "example": "Oceans are large areas of sea."
+    "id": "ch1_public_space",
+    "en": "public space",
+    "jp": "公共的な空間",
+    "kana": "こうきょうてきなくうかん",
+    "example": "People all want to be happy, so they must cooperate in creating a \"public space\" that makes this possible."
   },
   {
-    "id": "ch1_region",
-    "en": "region",
-    "jp": "州",
-    "kana": "しゅう",
-    "example": "Regions are groups of continents and islands."
+    "id": "ch1_agreement",
+    "en": "agreement",
+    "jp": "合意に達する",
+    "kana": "ごういにたっする",
+    "example": "When a \"conflict\" occurs, people try to reach an \"agreement\"."
   },
   {
-    "id": "ch1_island",
-    "en": "island",
-    "jp": "島",
-    "kana": "しま",
-    "example": "Islands are small areas of land."
+    "id": "ch1_happiness",
+    "en": "happiness",
+    "jp": "幸せ",
+    "kana": "しあわせ",
+    "example": "Some people say the whole society is happiest when individuals pursue their own happiness."
   },
   {
-    "id": "ch1_island_country",
-    "en": "island country",
-    "jp": "島国",
-    "kana": "しまぐに",
-    "example": "Japan is an island country."
+    "id": "ch1_society",
+    "en": "society",
+    "jp": "社会",
+    "kana": "しゃかい",
+    "example": "We must learn to live in the public space, keeping in mind both the interests of \"personal happiness\" and \"the happiness of the whole society\"."
   },
   {
-    "id": "ch1_landlocked_country",
-    "en": "landlocked country",
-    "jp": "内陸国",
-    "kana": "ないりくこく",
-    "example": "It is a landlocked country."
+    "id": "ch1_conflict",
+    "en": "conflict",
+    "jp": "争い",
+    "kana": "あらそい",
+    "example": "When a \"conflict\" occurs, people try to reach an \"agreement\"."
   },
   {
-    "id": "ch1_highest_place",
-    "en": "highest place",
-    "jp": "最高点",
-    "kana": "さいこうてん",
-    "example": "The highest place on the Earth is the top of Mount Everest."
+    "id": "ch1_individuals",
+    "en": "individuals",
+    "jp": "個人",
+    "kana": "こじん",
+    "example": "Some people say the whole society is happiest when individuals pursue their own happiness."
   },
   {
-    "id": "ch1_lowest_place",
-    "en": "lowest place",
-    "jp": "最低点",
-    "kana": "さいていてん",
-    "example": "The lowest place on the Earth is the bottom of Mariana Trench."
+    "id": "ch1_pursue",
+    "en": "pursue",
+    "jp": "追求する",
+    "kana": "ついきゅうする",
+    "example": "This allows people with different ideas to live together and pursue their own happiness at the same time."
   },
   {
-    "id": "ch1_top",
-    "en": "top",
-    "jp": "一番上",
-    "kana": "いちばんうえ",
-    "example": "The highest place on the Earth is the top of Mount Everest."
+    "id": "ch1_cooperate",
+    "en": "cooperate",
+    "jp": "創ることに協力する",
+    "kana": "つくることにきょうりょくする",
+    "example": "People all want to be happy, so they must cooperate in creating a \"public space\" that makes this possible."
   },
   {
-    "id": "ch1_bottom",
-    "en": "bottom",
-    "jp": "一番下",
-    "kana": "いちばんした",
-    "example": "The lowest place on the Earth is the bottom of Mariana Trench."
+    "id": "ch1_childhood",
+    "en": "childhood",
+    "jp": "子供時代",
+    "kana": "こどもじだい",
+    "example": "We are now living through \"adolescence\", a time in our \"life cycle\" when we go through rapid change and growth, transitioning from childhood to adulthood."
   },
   {
-    "id": "ch1_round",
-    "en": "round",
-    "jp": "丸い",
-    "kana": "まるい",
-    "example": "No, it looks round and smooth because it is very big."
+    "id": "ch1_adulthood",
+    "en": "adulthood",
+    "jp": "成人期",
+    "kana": "せいじんき",
+    "example": "In modern-day Japan, the conditions required for adulthood are complicated and diverse."
   },
   {
-    "id": "ch1_smooth",
-    "en": "smooth",
-    "jp": "なめらか",
-    "kana": "なめらか",
-    "example": "No, it looks round and smooth because it is very big."
+    "id": "ch1_modern_day",
+    "en": "modern-day",
+    "jp": "近代の",
+    "kana": "きんだいの",
+    "example": "In modern-day Japan, the conditions required for adulthood are complicated and diverse."
   },
   {
-    "id": "ch1_tall_mountains",
-    "en": "tall mountains",
-    "jp": "高い山",
-    "kana": "たかいやま",
-    "example": "There are tall mountains in Antarctica."
+    "id": "ch1_conditions",
+    "en": "conditions",
+    "jp": "求められる条件",
+    "kana": "もとめられるじょうけん",
+    "example": "In modern-day Japan, the conditions required for adulthood are complicated and diverse."
   },
   {
-    "id": "ch1_thick_ice",
-    "en": "thick ice",
-    "jp": "厚い氷",
-    "kana": "あついこおり",
-    "example": "Thick ice covers Antarctica."
+    "id": "ch1_expectations",
+    "en": "expectations",
+    "jp": "社会の期待",
+    "kana": "しゃかいのきたい",
+    "example": "We can say that adolescence is a time when we work to make ourselves strong enough to live up to the expectations of society."
   },
   {
-    "id": "ch1_average",
-    "en": "average",
-    "jp": "平均",
-    "kana": "へいきん",
-    "example": "The ice is 2,400 meters thick. (This is the average.)"
+    "id": "ch1_independence",
+    "en": "independence",
+    "jp": "早期の経済的自立",
+    "kana": "そうきのかいざいてきじりつ",
+    "example": "Early economic independence has become hard to achieve."
   },
   {
-    "id": "ch1_south_pole",
-    "en": "South Pole",
-    "jp": "南極",
-    "kana": "なんきょく",
-    "example": "The ice is very thick under the South Pole."
+    "id": "ch1_initiation_rites",
+    "en": "initiation rites",
+    "jp": "通過儀礼",
+    "kana": "つうかぎれい",
+    "example": "In the past, children were considered adults and became members of society after they passed through \"initiation rites\"."
   }
 ]
