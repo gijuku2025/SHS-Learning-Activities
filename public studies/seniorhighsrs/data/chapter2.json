@@ -1,0 +1,121 @@
+[
+  {
+    "id": "ch2_self_awareness",
+    "en": "self-awareness",
+    "jp": "自覚",
+    "kana": "じかく",
+    "example": "Psychological changes in adolescence are seen when we begin to experience romantic and sexual desires, together with a sense of self-awareness."
+  },
+  {
+    "id": "ch2_independence",
+    "en": "independence",
+    "jp": "自立",
+    "kana": "じりつ",
+    "example": "These are the first steps we take in becoming independent of our parents and other figures of authority in our lives."
+  },
+  {
+    "id": "ch2_identity_katakana",
+    "en": "identity",
+    "jp": "アイデンティティ",
+    "kana": "あいでんてぃてぃ",
+    "example": "In modern society, it is hard for us to find our identity and to decide what kind of person we are."
+  },
+  {
+    "id": "ch2_identity_kanji",
+    "en": "identity",
+    "jp": "自己同一性",
+    "kana": "じこどういつせい",
+    "example": "We can define identity as the state of having a strong ego and a clear sense of who we are."
+  },
+  {
+    "id": "ch2_maturity",
+    "en": "maturity",
+    "jp": "成熟",
+    "kana": "せいじゅく",
+    "example": "The question is whether this is accompanied by psychological maturity."
+  },
+  {
+    "id": "ch2_rebellious_phase",
+    "en": "rebellious phase",
+    "jp": "反抗期",
+    "kana": "はんこうき",
+    "example": "This is an assertiveness that appears again in adolescence as the second rebellious phase."
+  },
+  {
+    "id": "ch2_adolescent_crisis",
+    "en": "adolescent crisis",
+    "jp": "青年期の危機",
+    "kana": "せいねんきのきき",
+    "example": "This part of our lives is often referred to as the stage of adolescent crisis when we can be in danger of losing sight of ourselves."
+  },
+  {
+    "id": "ch2_moratorium",
+    "en": "moratorium",
+    "jp": "モラトリアム",
+    "kana": "もらとりあむ",
+    "example": "Erikson called the period of adolescence a moratorium, a time when society allows us to be free of the responsibilities of being an adult."
+  },
+  {
+    "id": "ch2_trial_and_error",
+    "en": "trial and error",
+    "jp": "試行錯誤",
+    "kana": "しこうさくご",
+    "example": "In the same way, we use trial and error to learn suitable patterns of human relationships."
+  },
+  {
+    "id": "ch2_conflict",
+    "en": "conflict",
+    "jp": "葛藤",
+    "kana": "かっとう",
+    "example": "When we have to choose between two or more desires or goals that are equally important, we experience conflict."
+  },
+  {
+    "id": "ch2_acceleration",
+    "en": "acceleration",
+    "jp": "成長の加速現象",
+    "kana": "せいちょうのかそくげんしょう",
+    "example": "Acceleration in human development and early sexual maturity has resulted in adolescence beginning at an increasingly young age."
+  },
+  {
+    "id": "ch2_authority",
+    "en": "authority",
+    "jp": "権威",
+    "kana": "けんい",
+    "example": "This drives us to resent the restrictions placed on us by parents, teachers, and other systems of established authority."
+  },
+  {
+    "id": "ch2_ego",
+    "en": "ego",
+    "jp": "自我",
+    "kana": "じが",
+    "example": "We can define identity as the state of having a strong ego and a clear sense of who we are."
+  },
+  {
+    "id": "ch2_autonomy",
+    "en": "autonomy",
+    "jp": "自律性",
+    "kana": "じりつせい",
+    "example": "Stage 2 involves feelings of independence and belief in self and personal abilities, known as autonomy."
+  },
+  {
+    "id": "ch2_initiative",
+    "en": "initiative",
+    "jp": "自発性",
+    "kana": "じはつせい",
+    "example": "Stage 3 is initiative vs guilt, focusing on the ability to take the initiative and make decisions."
+  },
+  {
+    "id": "ch2_intimacy",
+    "en": "intimacy",
+    "jp": "親密性",
+    "kana": "しんみつせい",
+    "example": "Stage 6 involves safe relationships filled with commitment and love, known as intimacy."
+  },
+  {
+    "id": "ch2_integrity",
+    "en": "integrity",
+    "jp": "統合性",
+    "kana": "とうごうせい",
+    "example": "Stage 8 is integrity vs despair, where pride in achievement leads to feelings of satisfaction."
+  }
+]
