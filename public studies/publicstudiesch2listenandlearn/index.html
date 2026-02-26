@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Public Studies Ch 2 Listen and Learn</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 380px;
+  }
+  h1 { font-size: 20px; margin-bottom: 12px; color: #333; }
+  #gameTitle { font-size: 20px; color: #333; margin-bottom: 12px; }
+  input[type="text"] {
+    padding: 10px; width: 80%;
+    border: 1px solid #ccc; border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  button {
+    padding: 12px; margin: 8px 0; width: 100%;
+    border: none; border-radius: 8px;
+    font-size: 16px; cursor: pointer;
+  }
+  .primary { background-color: #4CAF50; color: white; }
+  .play-btn { background-color: #1E90FF; color: white; }
+  .choice-btn {
+    margin: 5px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 18px;
+    padding: 14px;
+  }
+  .feedback { margin-top: 15px; font-weight: bold; font-size: 18px; }
+  .hidden { display: none; }
+  .progress-bar {
+    width: 100%; height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+  #progressFill {
+    height: 100%; width: 0%;
+    background-color: #FFA500;
+    border-radius: 4px;
+  }
+  #endQuizTitle {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container" id="startScreen">
+  <h1>Enter nickname</h1>
+  <input type="text" id="nickname" placeholder="Your name">
+  <button class="primary" onclick="startQuiz()">Start</button>
+</div>
+
+<div class="container hidden" id="quizScreen">
+  <h1 id="gameTitle"></h1>
+  <div class="progress-bar"><div id="progressFill"></div></div>
+  <div id="questionCounter"></div>
+  <h1>Listen and choose:</h1>
+  <button class="play-btn" onclick="playSentence()">🔊 Play Sentence</button>
+  <div id="choices"></div>
+  <div class="feedback" id="feedback"></div>
+</div>
+
+<div class="container hidden" id="endScreen">
+  <h1>Quiz Finished!</h1>
+  <h2 id="endQuizTitle"></h2>
+  <p id="finalResult"></p>
+  <button class="primary" onclick="location.reload()">Play Again</button>
+</div>
+
+<script>
+const quizTitle = "Public Studies Ch 2 Listen and Learn";
+
+const sentences = [
+            { en: "Self-awareness makes us distance ourselves from our parents and establish ourselves as individuals.", jp: "自己意識によって、私たちは親から距離を置き、個人として自分自身を確立するようになる。", enAudio: "audio/01_selfawareness_makes_us_distanc_en.mp3", jpAudio: "audio/01_selfawareness_makes_us_distanc_jp.mp3" },
+  { en: "These are the first steps we take in becoming independent of our parents and other figures of authority in our lives.", jp: "これらは、親や生活の中にある他の権威ある人物から自立するために踏み出す第一歩である。", enAudio: "audio/02_these_are_the_first_steps_we_t_en.mp3", jpAudio: "audio/02_these_are_the_first_steps_we_t_jp.mp3" },
+  { en: "The German psychologist Kurt Lewin called people in adolescence the marginal man because they are no longer children but not yet adults.", jp: "ドイツの心理学者クルト・レヴィンは、青年期の人々を、もはや子供ではないが、まだ大人でもないためマージナルマンと呼んだ。", enAudio: "audio/03_the_german_psychologist_kurt_l_en.mp3", jpAudio: "audio/03_the_german_psychologist_kurt_l_jp.mp3" },
+  { en: "Erikson called the period of adolescence a moratorium, a time when society allows us to be free of the responsibilities of being an adult.", jp: "エリクソンは青年期を、社会が大人としての責任を免除してくれる時期であるとしてモラトリアムと呼んだ。", enAudio: "audio/04_erikson_called_the_period_of_a_en.mp3", jpAudio: "audio/04_erikson_called_the_period_of_a_jp.mp3" },
+  { en: "This is a time of identity diffusion when we cannot decide who we are or what our role in society is.", jp: "これは、自分が誰であるか、社会での自分の役割が何であるかを決められないアイデンティティの拡散の時期である。", enAudio: "audio/05_this_is_a_time_of_identity_dif_en.mp3", jpAudio: "audio/05_this_is_a_time_of_identity_dif_jp.mp3" },
+  { en: "When we have to choose between two or more desires or goals that are equally important, we experience conflict.", jp: "同じくらい重要な2つ以上の欲求や目標の間で選択を迫られたとき、私たちは「葛藤」を経験する。", enAudio: "audio/06_when_we_have_to_choose_between_en.mp3", jpAudio: "audio/06_when_we_have_to_choose_between_jp.mp3" },
+];
+
+let questions = [];
+let nickname = localStorage.getItem("nickname") || "";
+let currentQuestion = 0;
+let score = 0;
+let firstTry = true;
+let startTime;
+
+const startScreen = document.getElementById("startScreen");
+const quizScreen = document.getElementById("quizScreen");
+const endScreen = document.getElementById("endScreen");
+const gameTitleEl = document.getElementById("gameTitle");
+const choicesDiv = document.getElementById("choices");
+const feedbackDiv = document.getElementById("feedback");
+const finalResult = document.getElementById("finalResult");
+const questionCounterDiv = document.getElementById("questionCounter");
+const progressFill = document.getElementById("progressFill");
+const endQuizTitle = document.getElementById("endQuizTitle");
+
+/* ---- logic unchanged below ---- */
+
+function startQuiz() {
+  const inputName = document.getElementById("nickname").value.trim();
+  nickname = inputName || localStorage.getItem("nickname") || "Player";
+
+  // save nickname for future quizzes
+  localStorage.setItem("nickname", nickname);
+
+  startTime = new Date();
+  gameTitleEl.textContent = quizTitle;
+
+  questions = [...sentences];
+  shuffle(questions);
+  questions = questions.slice(0, 10);
+
+  const startEn = Math.random() < 0.5;
+  questions = questions.map((q, i) => ({
+    ...q,
+    direction: (i % 2 === 0) ? (startEn ? "en" : "jp") : (startEn ? "jp" : "en")
+  }));
+
+  startScreen.classList.add("hidden");
+  quizScreen.classList.remove("hidden");
+  currentQuestion = 0;
+  score = 0;
+  showQuestion();
+}
+
+function showQuestion() {
+  feedbackDiv.textContent = "";
+  feedbackDiv.style.color = "#333";
+  firstTry = true;
+  choicesDiv.innerHTML = "";
+
+  const q = questions[currentQuestion];
+  const isEnToJp = q.direction === "en";
+
+  quizScreen.dataset.answer = isEnToJp ? q.jp : q.en;
+  quizScreen.dataset.audio = isEnToJp ? q.enAudio : q.jpAudio;
+
+  questionCounterDiv.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+  progressFill.style.width = ((currentQuestion + 1) / questions.length * 100) + "%";
+
+  let pool = sentences.map(s => isEnToJp ? s.jp : s.en);
+  shuffle(pool);
+
+  let options = pool.slice(0, 3);
+  if (!options.includes(quizScreen.dataset.answer)) {
+    options[Math.floor(Math.random() * 3)] = quizScreen.dataset.answer;
+  }
+
+  const colors = ["#FFA500", "#FF4C4C", "#4CAF50"];
+  options.forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.textContent = opt;
+    btn.className = "choice-btn";
+    btn.style.backgroundColor = colors[i % colors.length];
+    btn.onclick = () => checkAnswer(opt, btn);
+    choicesDiv.appendChild(btn);
+  });
+}
+
+function playSentence() {
+  new Audio(quizScreen.dataset.audio).play();
+}
+
+function checkAnswer(choice, btn) {
+  const correct = quizScreen.dataset.answer;
+  disableChoices();
+
+  if (choice === correct) {
+    feedbackDiv.textContent = "Correct!";
+    score += firstTry ? 2 : 1;
+  } else if (firstTry) {
+    feedbackDiv.style.color = "orange";
+    feedbackDiv.textContent = "Try again!";
+    firstTry = false;
+    enableChoices();
+    return;
+  } else {
+    feedbackDiv.style.color = "red";
+    feedbackDiv.textContent = `Wrong! Correct answer: ${correct}`;
+  }
+
+  if (currentQuestion === questions.length - 1) {
+    setTimeout(endQuiz, 1000);
+  } else {
+    const nextBtn = document.createElement("button");
+    nextBtn.textContent = "Next Question →";
+    nextBtn.style.backgroundColor = "#800080";
+    nextBtn.style.color = "#fff";
+    nextBtn.onclick = nextQuestion;
+    choicesDiv.appendChild(nextBtn);
+  }
+}
+
+function disableChoices() {
+  choicesDiv.querySelectorAll(".choice-btn").forEach(b => b.disabled = true);
+}
+function enableChoices() {
+  choicesDiv.querySelectorAll(".choice-btn").forEach(b => b.disabled = false);
+}
+function nextQuestion() {
+  currentQuestion++;
+  showQuestion();
+}
+
+function endQuiz() {
+  quizScreen.classList.add("hidden");
+  endScreen.classList.remove("hidden");
+  endQuizTitle.textContent = quizTitle;
+
+  const endTime = new Date();
+  const totalSeconds = Math.floor((endTime - startTime) / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+
+  finalResult.innerHTML = `
+    ${nickname}'s score: ${score} / ${questions.length * 2}<br>
+    Time taken: ${minutes} min ${seconds} sec<br>
+    Finished on: ${endTime.toLocaleDateString()}<br>
+    Finished at: ${endTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+  `;
+}
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+	
+const savedName = localStorage.getItem("nickname");
+if (savedName) {
+  document.getElementById("nickname").value = savedName;
+  startQuiz();
+}	
+	
+	
+</script>
+</body>
+</html>
