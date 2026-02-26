@@ -1,0 +1,121 @@
+[
+  {
+    "id": "ch3_disability",
+    "en": "disability",
+    "jp": "障害",
+    "kana": "しょうがい",
+    "example": "The Paralympics is an international sports event for people with disabilities."
+  },
+  {
+    "id": "ch3_race",
+    "en": "race",
+    "jp": "人種",
+    "kana": "じんしゅ",
+    "example": "People should all be respected regardless of race, gender, age, or disability."
+  },
+  {
+    "id": "ch3_gender",
+    "en": "gender",
+    "jp": "ジェンダー",
+    "kana": "じぇんだー",
+    "example": "To create a better society, people should all be respected regardless of race, gender, age, or disability."
+  },
+  {
+    "id": "ch3_uniformity",
+    "en": "uniformity",
+    "jp": "画一性",
+    "kana": "かくいつせい",
+    "example": "We should move away from social uniformity and embrace different ways of thinking."
+  },
+  {
+    "id": "ch3_diversity",
+    "en": "diversity",
+    "jp": "多様性",
+    "kana": "たようせい",
+    "example": "The Paralympics are full of ideas that teach us about the importance of diversity in society."
+  },
+  {
+    "id": "ch3_normalisation",
+    "en": "normalisation",
+    "jp": "ノーマライゼーション",
+    "kana": "のーまらいぜーしょん",
+    "example": "Since the 1990s, the idea of normalisation has become accepted in Japanese society."
+  },
+  {
+    "id": "ch3_inclusive_society",
+    "en": "inclusive society",
+    "jp": "共生社会",
+    "kana": "きょうせいしゃかい",
+    "example": "To create a better society, we must work toward an inclusive society where everyone belongs."
+  },
+  {
+    "id": "ch3_prejudice",
+    "en": "prejudice",
+    "jp": "偏見",
+    "kana": "へんけん",
+    "example": "Think of some examples of discrimination based on prejudice."
+  },
+  {
+    "id": "ch3_discrimination",
+    "en": "discrimination",
+    "jp": "差別",
+    "kana": "さべつ",
+    "example": "Think of some examples of discrimination based on prejudice."
+  },
+  {
+    "id": "ch3_stereotypes",
+    "en": "stereotypes",
+    "jp": "ステレオタイプ",
+    "kana": "すてれおたいぷ",
+    "example": "Sometimes we have fixed ideas about people which are called stereotypes."
+  },
+  {
+    "id": "ch3_unconscious_bias",
+    "en": "unconscious bias",
+    "jp": "アンコンシャス・バイアス",
+    "kana": "あんこんしゃすばいあす",
+    "example": "Unconscious bias is something that we are not aware of but that influences our actions."
+  },
+  {
+    "id": "ch3_cultural_diversity",
+    "en": "cultural diversity",
+    "jp": "文化多様性",
+    "kana": "ぶんかたようせい",
+    "example": "We should respect cultural diversity and learn from different ways of life."
+  },
+  {
+    "id": "ch3_ethnocentrism",
+    "en": "ethnocentrism",
+    "jp": "自文化中心主義",
+    "kana": "じぶんかちゅうしんしゅぎ",
+    "example": "Ethnocentrism is the tendency to look at the world primarily from the perspective of one's own culture."
+  },
+  {
+    "id": "ch3_cultural_relativism",
+    "en": "cultural_relativism",
+    "jp": "文化相対主義",
+    "kana": "ぶんかそうたいしゅぎ",
+    "example": "Cultural relativism is the idea that a person's beliefs should be understood in terms of their own culture."
+  },
+  {
+    "id": "ch3_multiculturalism",
+    "en": "multiculturalism",
+    "jp": "多文化共生",
+    "kana": "たぶんかきょうせい",
+    "example": "Multiculturalism is becoming more important as people from different backgrounds live together."
+  },
+  {
+    "id": "ch3_universal_design",
+    "en": "universal design",
+    "jp": "ユニバーサルデザイン",
+    "kana": "ゆにばーさるでざいん",
+    "example": "Universal design aims to create products and environments that are usable by all people."
+  },
+  {
+    "id": "ch3_barrier_free",
+    "en": "barrier-free",
+    "jp": "バリアフリー",
+    "kana": "ばりあふりー",
+    "example": "Making buildings barrier-free helps people with disabilities move around more easily."
+  }
+]
