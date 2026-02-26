@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Public Studies Ch 1 Listen and Learn</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 380px;
+  }
+  h1 { font-size: 20px; margin-bottom: 12px; color: #333; }
+  #gameTitle { font-size: 20px; color: #333; margin-bottom: 12px; }
+  input[type="text"] {
+    padding: 10px; width: 80%;
+    border: 1px solid #ccc; border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  button {
+    padding: 12px; margin: 8px 0; width: 100%;
+    border: none; border-radius: 8px;
+    font-size: 16px; cursor: pointer;
+  }
+  .primary { background-color: #4CAF50; color: white; }
+  .play-btn { background-color: #1E90FF; color: white; }
+  .choice-btn {
+    margin: 5px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 18px;
+    padding: 14px;
+  }
+  .feedback { margin-top: 15px; font-weight: bold; font-size: 18px; }
+  .hidden { display: none; }
+  .progress-bar {
+    width: 100%; height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+  #progressFill {
+    height: 100%; width: 0%;
+    background-color: #FFA500;
+    border-radius: 4px;
+  }
+  #endQuizTitle {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container" id="startScreen">
+  <h1>Enter nickname</h1>
+  <input type="text" id="nickname" placeholder="Your name">
+  <button class="primary" onclick="startQuiz()">Start</button>
+</div>
+
+<div class="container hidden" id="quizScreen">
+  <h1 id="gameTitle"></h1>
+  <div class="progress-bar"><div id="progressFill"></div></div>
+  <div id="questionCounter"></div>
+  <h1>Listen and choose:</h1>
+  <button class="play-btn" onclick="playSentence()">🔊 Play Sentence</button>
+  <div id="choices"></div>
+  <div class="feedback" id="feedback"></div>
+</div>
+
+<div class="container hidden" id="endScreen">
+  <h1>Quiz Finished!</h1>
+  <h2 id="endQuizTitle"></h2>
+  <p id="finalResult"></p>
+  <button class="primary" onclick="location.reload()">Play Again</button>
+</div>
+
+<script>
+const quizTitle = "Public Studies Ch 1 Listen and Learn";
+
+const sentences = [
+            { en: "Some people say the whole society is happiest when individuals pursue their own happiness.", jp: "個人の幸福を追求することが、社会全体の幸福につながると考える人もいる。", enAudio: "audio/01_some_people_say_the_whole_soci_en.mp3", jpAudio: "audio/01_some_people_say_the_whole_soci_jp.mp3" },
+  { en: "When a conflict occurs, people try to reach an agreement to live together and pursue their own happiness at the same time.", jp: "対立が起こったとき、人々は共に暮らし、同時に幸福を追求するために合意に達しようとする。", enAudio: "audio/02_when_a_conflict_occurs_people__en.mp3", jpAudio: "audio/02_when_a_conflict_occurs_people__jp.mp3" },
+  { en: "They use concepts such as efficiency and fairness to evaluate decisions and the decision-making process.", jp: "意思決定やその過程を評価するために、効率や公平といった概念を用いる。", enAudio: "audio/03_they_use_concepts_such_as_effi_en.mp3", jpAudio: "audio/03_they_use_concepts_such_as_effi_jp.mp3" },
+  { en: "People all want to be happy, so they must cooperate in creating a public space that makes this possible.", jp: "誰もが幸せになりたいと願っているため、それを可能にする公共的な空間を創ることに協力しなければならない。", enAudio: "audio/04_people_all_want_to_be_happy_so_en.mp3", jpAudio: "audio/04_people_all_want_to_be_happy_so_jp.mp3" },
+  { en: "We are now living through adolescence, a time in our life cycle when we go through rapid change and growth, transitioning from childhood to adulthood.", jp: "私たちは今、子供から大人へと転換しながら、急激な変化と成長を遂げる人生のサイクルの中の青年期を生きている。", enAudio: "audio/05_we_are_now_living_through_adol_en.mp3", jpAudio: "audio/05_we_are_now_living_through_adol_jp.mp3" },
+  { en: "Adolescence is a time when we work to make ourselves strong enough to live up to the expectations of society.", jp: "青年期とは、社会の期待に応えられるような強い自分を作るために努力する時期である。", enAudio: "audio/06_adolescence_is_a_time_when_we__en.mp3", jpAudio: "audio/06_adolescence_is_a_time_when_we__jp.mp3" },
+  { en: "In modern-day Japan, the conditions required for adulthood are complicated and diverse, and early economic independence has become hard to achieve.", jp: "現代の日本において、成人に求められる条件は複雑で多様化しており、早期の経済的自立は困難になっている。", enAudio: "audio/07_in_modernday_japan_the_conditi_en.mp3", jpAudio: "audio/07_in_modernday_japan_the_conditi_jp.mp3" },
+  { en: "The law was changed in April 2022; people come of age at eighteen instead of twenty.", jp: "2022年4月に法律が改正され、成人年齢は20歳から18歳に引き下げられた。", enAudio: "audio/08_the_law_was_changed_in_april_2_en.mp3", jpAudio: "audio/08_the_law_was_changed_in_april_2_jp.mp3" },
+];
+
+let questions = [];
+let nickname = "";
+let currentQuestion = 0;
+let score = 0;
+let firstTry = true;
+let startTime;
+
+const startScreen = document.getElementById("startScreen");
+const quizScreen = document.getElementById("quizScreen");
+const endScreen = document.getElementById("endScreen");
+const gameTitleEl = document.getElementById("gameTitle");
+const choicesDiv = document.getElementById("choices");
+const feedbackDiv = document.getElementById("feedback");
+const finalResult = document.getElementById("finalResult");
+const questionCounterDiv = document.getElementById("questionCounter");
+const progressFill = document.getElementById("progressFill");
+const endQuizTitle = document.getElementById("endQuizTitle");
+
+/* ---- logic unchanged below ---- */
+
+function startQuiz() {
+  nickname = document.getElementById("nickname").value.trim() || "Player";
+  startTime = new Date();
+  gameTitleEl.textContent = quizTitle;
+
+  questions = [...sentences];
+  shuffle(questions);
+  questions = questions.slice(0, 10);
+
+  const startEn = Math.random() < 0.5;
+  questions = questions.map((q, i) => ({
+    ...q,
+    direction: (i % 2 === 0) ? (startEn ? "en" : "jp") : (startEn ? "jp" : "en")
+  }));
+
+  startScreen.classList.add("hidden");
+  quizScreen.classList.remove("hidden");
+  currentQuestion = 0;
+  score = 0;
+  showQuestion();
+}
+
+function showQuestion() {
+  feedbackDiv.textContent = "";
+  feedbackDiv.style.color = "#333";
+  firstTry = true;
+  choicesDiv.innerHTML = "";
+
+  const q = questions[currentQuestion];
+  const isEnToJp = q.direction === "en";
+
+  quizScreen.dataset.answer = isEnToJp ? q.jp : q.en;
+  quizScreen.dataset.audio = isEnToJp ? q.enAudio : q.jpAudio;
+
+  questionCounterDiv.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+  progressFill.style.width = ((currentQuestion + 1) / questions.length * 100) + "%";
+
+  let pool = sentences.map(s => isEnToJp ? s.jp : s.en);
+  shuffle(pool);
+
+  let options = pool.slice(0, 3);
+  if (!options.includes(quizScreen.dataset.answer)) {
+    options[Math.floor(Math.random() * 3)] = quizScreen.dataset.answer;
+  }
+
+  const colors = ["#FFA500", "#FF4C4C", "#4CAF50"];
+  options.forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.textContent = opt;
+    btn.className = "choice-btn";
+    btn.style.backgroundColor = colors[i % colors.length];
+    btn.onclick = () => checkAnswer(opt, btn);
+    choicesDiv.appendChild(btn);
+  });
+}
+
+function playSentence() {
+  new Audio(quizScreen.dataset.audio).play();
+}
+
+function checkAnswer(choice, btn) {
+  const correct = quizScreen.dataset.answer;
+  disableChoices();
+
+  if (choice === correct) {
+    feedbackDiv.textContent = "Correct!";
+    score += firstTry ? 2 : 1;
+  } else if (firstTry) {
+    feedbackDiv.style.color = "orange";
+    feedbackDiv.textContent = "Try again!";
+    firstTry = false;
+    enableChoices();
+    return;
+  } else {
+    feedbackDiv.style.color = "red";
+    feedbackDiv.textContent = `Wrong! Correct answer: ${correct}`;
+  }
+
+  if (currentQuestion === questions.length - 1) {
+    setTimeout(endQuiz, 1000);
+  } else {
+    const nextBtn = document.createElement("button");
+    nextBtn.textContent = "Next Question →";
+    nextBtn.style.backgroundColor = "#800080";
+    nextBtn.style.color = "#fff";
+    nextBtn.onclick = nextQuestion;
+    choicesDiv.appendChild(nextBtn);
+  }
+}
+
+function disableChoices() {
+  choicesDiv.querySelectorAll(".choice-btn").forEach(b => b.disabled = true);
+}
+function enableChoices() {
+  choicesDiv.querySelectorAll(".choice-btn").forEach(b => b.disabled = false);
+}
+function nextQuestion() {
+  currentQuestion++;
+  showQuestion();
+}
+
+function endQuiz() {
+  quizScreen.classList.add("hidden");
+  endScreen.classList.remove("hidden");
+  endQuizTitle.textContent = quizTitle;
+
+  const endTime = new Date();
+  const totalSeconds = Math.floor((endTime - startTime) / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+
+  finalResult.innerHTML = `
+    ${nickname}'s score: ${score} / ${questions.length * 2}<br>
+    Time taken: ${minutes} min ${seconds} sec<br>
+    Finished on: ${endTime.toLocaleDateString()}<br>
+    Finished at: ${endTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+  `;
+}
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+</script>
+</body>
+</html>
