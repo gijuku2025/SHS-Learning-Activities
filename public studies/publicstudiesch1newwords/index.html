@@ -102,7 +102,7 @@ const allWords = [
 
 // ====== Quiz logic ======
 let words = [];
-let nickname = "";
+let nickname = localStorage.getItem("nickname") || "";
 let currentQuestion = 0;
 let score = 0;
 let firstTry = true;
@@ -118,11 +118,17 @@ const questionCounterDiv = document.getElementById("questionCounter");
 const progressFill = document.getElementById("progressFill");
 
 function startQuiz() {
-  nickname = document.getElementById("nickname").value.trim() || "Player";
+  const inputName = document.getElementById("nickname").value.trim();
+  nickname = inputName || localStorage.getItem("nickname") || "Player";
+
+  // save nickname for future quizzes
+  localStorage.setItem("nickname", nickname);
+
   startTime = new Date();
   words = [...allWords];
   shuffle(words);
-  words = words.slice(0, 10); // take 10 random words
+  words = words.slice(0, 10);
+
   startScreen.classList.add("hidden");
   quizScreen.classList.remove("hidden");
   currentQuestion = 0;
@@ -249,6 +255,12 @@ function shuffle(array) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
+}
+	
+	const savedName = localStorage.getItem("nickname");
+if (savedName) {
+  document.getElementById("nickname").value = savedName;
+  startQuiz();
 }
 </script>
 </body>
