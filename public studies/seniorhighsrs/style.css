@@ -191,3 +191,43 @@ input:focus {
   background: #2563eb;
   transition: width 0.3s ease;
 }
+
+/* ===== Grade Buttons Redesign ===== */
+
+.grade-buttons {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.grade-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* align left */
+  gap: 12px;
+
+  width: 100%; /* full width of card */
+}
+
+.grade-row button {
+  min-width: 110px;
+}
+
+.grade-jp {
+  font-size: 0.9em;
+  color: #6b7280;
+}
+
+/* Color coding */
+button.hard {
+  background: #ef4444;
+}
+
+button.good {
+  background: #22c55e;
+}
+
+button.easy {
+  background: #3b82f6;
+}
