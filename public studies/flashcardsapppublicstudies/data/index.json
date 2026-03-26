@@ -4,12 +4,12 @@
       "name": "Chapter 1",
       "sections": [
         {
-          "name": "Partition of India",
-          "file": "chapter1/partition.json"
+          "name": "Happiness",
+          "file": "chapter1/happiness.json"
         },
         {
-          "name": "Sialkot Soccer Balls",
-          "file": "chapter1/sialkot.json"
+          "name": "Individualism and Utilitarianism",
+          "file": "chapter1/individualism.json"
         }
       ]
     }
