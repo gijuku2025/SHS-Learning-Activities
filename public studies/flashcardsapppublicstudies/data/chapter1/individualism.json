@@ -1,0 +1,29 @@
+{
+  "lesson": "Individualism",
+  "vocab": [
+    {
+      "en": "individualism",
+      "jp": { "kanji": "個人主義", "kana": "こじんしゅぎ" }
+    },
+    {
+      "en": "utilitarianism",
+      "jp": { "kanji": "功利主義", "kana": "こうりしゅぎ" }
+    },
+    {
+      "en": "free",
+      "jp": { "kanji": "自由である", "kana": "じゆうである" }
+    },
+    {
+      "en": "choose",
+      "jp": { "kanji": "選ぶ", "kana": "えらぶ" }
+    },
+    {
+      "en": "group",
+      "jp": { "kanji": "集団", "kana": "しゅうだん" }
+    },
+    {
+      "en": "most people",
+      "jp": { "kanji": "大多数の人々", "kana": "だいたすうのひとびと" }
+    }
+  ]
+}
