@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vocab Drill</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    header {
+      text-align: center;
+      padding: 10px;
+      font-size: 20px;
+      background: #222;
+    }
+    .main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex-direction: column;
+    }
+    .en {
+  font-size: 9vw;
+  margin: 10px;
+}
+
+.kanji {
+  font-size: 7vw;
+  margin: 5px;
+}
+
+.kana {
+  font-size: 3vw;
+  color: #aaa;
+}
+    footer {
+      padding: 10px;
+      text-align: center;
+      background: #222;
+    }
+    button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+<header id="lessonTitle">Loading...</header>
+
+<div class="main">
+  <div id="en" class="en"></div>
+  <div id="kanji" class="kanji"></div>
+  <div id="kana" class="kana"></div>
+</div>
+
+<footer>
+  <button onclick="start()">Start</button>
+  <button onclick="next()">Next (Space)</button>
+  <button onclick="toggleAnswer()">Reveal (A)</button>
+  <button onclick="restart()">Restart (R)</button>
+</footer>
+
+<script>
+let data = null;
+
+const params = new URLSearchParams(window.location.search);
+const fileName = params.get("file") || "partition.json";
+const dataPath = `data/${fileName}`;
+
+// phases: 0 introduce, 1 EN->JP, 2 JP->EN, 3 end
+let phase = 0;
+let index = 0;
+let showAnswer = true;
+
+const enEl = document.getElementById("en");
+const kanjiEl = document.getElementById("kanji");
+const kanaEl = document.getElementById("kana");
+
+function render() {
+  if (!data) return;
+
+  enEl.textContent = "";
+  kanjiEl.textContent = "";
+  kanaEl.textContent = "";
+
+  // END SCREEN
+  if (phase === 3) {
+    enEl.textContent = "End";
+    return;
+  }
+
+  const word = data.vocab[index];
+
+  // INTRODUCE
+  if (phase === 0) {
+    enEl.textContent = word.en;
+    kanjiEl.textContent = word.jp.kanji;
+    kanaEl.textContent = word.jp.kana;
+  }
+
+  // EN → JP
+  else if (phase === 1) {
+    enEl.textContent = word.en;
+    if (showAnswer) {
+      kanjiEl.textContent = word.jp.kanji;
+      kanaEl.textContent = word.jp.kana;
+    }
+  }
+
+  // JP → EN
+  else if (phase === 2) {
+    kanjiEl.textContent = word.jp.kanji;
+    kanaEl.textContent = word.jp.kana;
+    if (showAnswer) {
+      enEl.textContent = word.en;
+    }
+  }
+}
+
+function next() {
+  if (!data) return;
+
+  // INTRODUCE phase
+  if (phase === 0) {
+    index++;
+    if (index >= data.vocab.length) {
+      phase = 1;
+      index = 0;
+      showAnswer = false;
+    }
+    render();
+    return;
+  }
+
+  // DRILL phases
+
+  // first press → reveal
+  if (!showAnswer) {
+    showAnswer = true;
+    render();
+    return;
+  }
+
+  // second press → next word
+  showAnswer = false;
+  index++;
+
+  if (index >= data.vocab.length) {
+    index = 0;
+    phase++;
+
+    if (phase > 2) {
+      phase = 3; // END
+      render();
+      return;
+    }
+  }
+
+  render();
+}
+
+function toggleAnswer() {
+  showAnswer = true;
+  render();
+}
+
+function start() {
+  phase = 0;
+  index = 0;
+  showAnswer = true;
+  render();
+}
+
+function restart() {
+  start();
+}
+
+// Keyboard controls
+document.addEventListener("keydown", (e) => {
+  if (e.code === "Space") {
+    e.preventDefault();
+    next();
+  }
+  if (e.key.toLowerCase() === "a") toggleAnswer();
+  if (e.key.toLowerCase() === "r") restart();
+});
+
+// Load JSON
+fetch(dataPath)
+  .then(res => res.json())
+  .then(json => {
+    data = json;
+    document.getElementById("lessonTitle").textContent = data.lesson;
+    render();
+  })
+  .catch(err => {
+    document.getElementById("lessonTitle").textContent = "Error loading JSON";
+    console.error(err);
+  });
+
+</script>
+
+</body>
+</html>

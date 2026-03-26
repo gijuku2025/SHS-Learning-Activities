@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vocabulary Menu</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .menu {
+      width: 100%;
+      max-width: 500px;
+    }
+    .chapter {
+      margin-bottom: 20px;
+    }
+    .chapter-title {
+      font-size: 20px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #444;
+      padding-bottom: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin: 5px 0;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Vocabulary Drill</h1>
+<div class="menu" id="menu"></div>
+
+<script>
+fetch("data/index.json")
+  .then(res => res.json())
+  .then(data => {
+    const menu = document.getElementById("menu");
+
+    data.chapters.forEach(chapter => {
+      const chapterDiv = document.createElement("div");
+      chapterDiv.className = "chapter";
+
+      const title = document.createElement("div");
+      title.className = "chapter-title";
+      title.textContent = chapter.name;
+
+      chapterDiv.appendChild(title);
+
+      chapter.sections.forEach(section => {
+        const btn = document.createElement("button");
+        btn.textContent = section.name;
+        btn.onclick = () => {
+          window.location.href = `drill.html?file=${section.file}`;
+        };
+        chapterDiv.appendChild(btn);
+      });
+
+      menu.appendChild(chapterDiv);
+    });
+  })
+  .catch(err => {
+    document.body.innerHTML = "Error loading menu";
+    console.error(err);
+  });
+</script>
+
+</body>
+</html>
