@@ -1,0 +1,29 @@
+{
+  "lesson": "Happiness",
+  "vocab": [
+    {
+      "en": "society",
+      "jp": { "kanji": "社会", "kana": "しゃかい" }
+    },
+    {
+      "en": "individual",
+      "jp": { "kanji": "個人", "kana": "こじん" }
+    },
+    {
+      "en": "happiness",
+      "jp": { "kanji": "幸福", "kana": "こうふく" }
+    },
+    {
+      "en": "pursue",
+      "jp": { "kanji": "追求する", "kana": "ついきゅうする" }
+    },
+    {
+      "en": "sacrifice",
+      "jp": { "kanji": "犠牲にする", "kana": "ぎせいにする" }
+    },
+    {
+      "en": "idea",
+      "jp": { "kanji": "考え／意見", "kana": "かんがえ／いけん" }
+    }
+  ]
+}
