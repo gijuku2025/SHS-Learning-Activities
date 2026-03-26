@@ -1,5 +1,5 @@
 const app = document.getElementById("app");
-const SUBJECT = "geography"; // change to "geometry" or "civics" in other copies
+const SUBJECT = "public studies"; // change to "geometry" or "civics" in other copies
 const SUBJECT_LABEL = SUBJECT.charAt(0).toUpperCase() + SUBJECT.slice(1);
 
 const CHAPTER_FILES = [
@@ -16,6 +16,8 @@ const MASTERY_INTERVAL = 30; // days
 const RARE_REVIEW_INTERVAL = 60; // days
 
 let sessionCount = 0;
+let testedCount = 0;
+
 let failedThisSession = new Set();
 let sessionStartTime = null;
 
@@ -30,11 +32,13 @@ todayNewCount: Number(localStorage.getItem(SUBJECT + "_todayNewCount") || 0),
 };
 
 let vocab = [];
-let newQueue = [];
+let previewQueue = []; 
 let learningQueue = [];
 let reviewQueue = [];
 let current = null;
 let direction = null;
+
+
 
 /* ================= STORAGE ================= */
 
@@ -60,6 +64,31 @@ function resetDailyCountIfNeeded() {
 }
 
 /* ================= UI ================= */
+
+function showLearningCheck() {
+  const prompt = direction === "en-jp" ? current.en : current.jp;
+
+  app.innerHTML = `
+    <div class="center">
+      <div class="card study-card">
+
+        <div class="word">${prompt}</div>
+        <p>Try typing the answer</p>
+
+        <input id="answer" class="answer-input">
+
+        <button id="submitBtn" onclick="submitLearningCheck()">Check</button>
+
+      </div>
+    </div>
+  `;
+
+  setTimeout(() => {
+    const input = document.getElementById("answer");
+    if (input) input.focus();
+  }, 50);
+}
+
 
 function showNicknameScreen() {
   app.innerHTML = `
@@ -89,7 +118,7 @@ function showChapterScreen() {
     <div class="center">
       <div class="card">
         <h2 class="heading">Welcome to Smart Review, ${state.nickname}</h2>
-        <h2 class="heading">Public Studies</h2>   
+        <h2 class="heading">Senior High ${SUBJECT_LABEL}</h2>   
         <p style="margin:5px 0;">Select chapters</p>
 
         
@@ -137,6 +166,29 @@ function toggleChapter(ch, el) {
   save();
 }
 
+function showPreviewCard() {
+  app.innerHTML = `
+    <div class="center">
+      <div class="card study-card">
+
+        <h3>Learn this word</h3>
+
+        <div class="word">${current.en}</div>
+        <div style="font-size:1.5em; margin:10px 0;">${current.jp}</div>
+        <div>${current.kana || ""}</div>
+
+        ${current.example ? `<div class="example">${current.example}</div>` : ""}
+
+        <button style="margin-top:20px;" onclick="startLearningCheck()">I understand</button>
+
+      </div>
+    </div>
+  `;
+}
+
+
+
+
 /* ================= LOAD ================= */
 
 
@@ -177,6 +229,7 @@ async function startStudy() {
   resetDailyCountIfNeeded();
   sessionStartTime = Date.now();
   sessionCount = 0;
+  testedCount = 0;
   failedThisSession = new Set();
   state.stats = { correct: 0, wrong: 0, new: 0, review: 0 };
   await loadVocab();
@@ -185,17 +238,21 @@ async function startStudy() {
 }
 
 function buildQueues() {
-  newQueue = [];
+  previewQueue = [];
   learningQueue = [];
   reviewQueue = [];
   const now = Date.now();
+  let newToday = state.todayNewCount;
+
+
 
   for (let item of vocab) {
     let p = state.progress[item.id];
 
-    if (!p && state.todayNewCount < MAX_NEW_PER_DAY) {
-      newQueue.push(item);
-    } 
+    if (!p && newToday < MAX_NEW_PER_DAY) {
+  previewQueue.push(item);
+  newToday++;
+}
     else if (p && now >= p.nextReview) {
   if (p.status === "learning") {
     learningQueue.push(item);
@@ -208,18 +265,23 @@ function buildQueues() {
 
   }
 
-  shuffle(newQueue);
+ // ✅ lock in today's new count immediately
+state.todayNewCount = newToday;
+save();
+		
   shuffle(learningQueue);
   shuffle(reviewQueue);
+  shuffle(previewQueue);	
+		
 }
 
 
 
  function renderProgress() {
   const remaining =
-    newQueue.length + learningQueue.length + reviewQueue.length + 1;
+  previewQueue.length + learningQueue.length + reviewQueue.length + 1;
 
-  const currentNum = sessionCount + 1;
+ const currentNum = testedCount + 1;
 
   const maxTotal = Math.min(
     currentNum + remaining - 1,
@@ -250,11 +312,29 @@ function getChapterNumber(item) {
 
 function nextQuestion() {
   if (sessionCount >= MAX_ITEMS_PER_SESSION) return showResults();
-  if (!reviewQueue.length && !learningQueue.length && !newQueue.length) return showResults();
 
-  if (learningQueue.length) current = learningQueue.shift();
-  else if (reviewQueue.length) current = reviewQueue.shift();
-  else current = newQueue.shift();
+
+  if (
+  !previewQueue.length &&
+  !reviewQueue.length &&
+  !learningQueue.length
+) return showResults();
+
+// 🔹 NEW: Preview phase comes first
+if (previewQueue.length) {
+  current = previewQueue.shift();
+  return showPreviewCard();
+}
+
+if (learningQueue.length) {
+  // prevent immediate repeat of same item
+  if (learningQueue[0].id === current?.id && learningQueue.length > 1) {
+    learningQueue.push(learningQueue.shift());
+  }
+  current = learningQueue.shift();
+}
+else if (reviewQueue.length) current = reviewQueue.shift();
+else return showResults(); // nothing left
 
   direction = Math.random()<0.5?"en-jp":"jp-en";
 
@@ -299,12 +379,62 @@ setTimeout(() => {
 
 /* ================= CHECKING ================= */
 
-function normalizeJP(str) {
-  return str.replace(/[\u30a1-\u30f6]/g, ch =>
-    String.fromCharCode(ch.charCodeAt(0)-0x60)
-  );
+function startLearningCheck() {
+  direction = Math.random() < 0.5 ? "en-jp" : "jp-en";
+  showLearningCheck();
+}
+								 
+  function normalizeJP(str) {
+  return str
+    .normalize("NFKC") // fix full-width / half-width
+    .replace(/[\u30a1-\u30f6]/g, ch =>
+      String.fromCharCode(ch.charCodeAt(0) - 0x60)
+    ) // katakana → hiragana
+    .replace(/\s+/g, "") // remove spaces
+    .trim();
 }
 
+function submitLearningCheck() {
+  const input = document.getElementById("answer").value.trim();
+
+  let correct = false;
+
+  if (direction === "en-jp") {
+  const inputNorm = normalizeJP(input);
+
+  const jpNorm = normalizeJP(current.jp);
+  const kanaNorm = current.kana ? normalizeJP(current.kana) : null;
+
+  if (
+    inputNorm === jpNorm ||
+    (kanaNorm && inputNorm === kanaNorm)
+  ) {
+    correct = true;
+  }
+} else {
+    const dist = levenshtein(
+      input.toLowerCase(),
+      current.en.toLowerCase()
+    );
+    if (dist <= 1) correct = true;
+  }
+
+  if (!correct) {
+  alert("Try again!");
+  return;
+}
+
+  // ✅ ONE success → move to SRS
+  // move item into learning queue instead of grading it
+learningQueue.splice(2, 0, current);
+
+sessionCount++;
+nextQuestion();
+}
+	  
+	  
+	  
+	  
 function levenshtein(a,b){
   const dp=Array.from({length:a.length+1},()=>Array(b.length+1).fill(0));
   for(let i=0;i<=a.length;i++)dp[i][0]=i;
@@ -326,14 +456,18 @@ function submitAnswer() {
   let result = "wrong";
 
   if (direction === "en-jp") {
-    const a = normalizeJP(input);
-    if (
-      a === normalizeJP(current.jp) ||
-      (current.kana && a === normalizeJP(current.kana))
-    ) {
-      result = "correct";
-    }
-  } else {
+  const inputNorm = normalizeJP(input);
+
+  const jpNorm = normalizeJP(current.jp);
+  const kanaNorm = current.kana ? normalizeJP(current.kana) : null;
+
+  if (
+    inputNorm === jpNorm ||
+    (kanaNorm && inputNorm === kanaNorm)
+  ) {
+    result = "correct";
+  }
+} else {
     const dist = levenshtein(
       input.toLowerCase(),
       current.en.toLowerCase()
@@ -343,6 +477,7 @@ function submitAnswer() {
   }
 
   sessionCount++;
+  testedCount++;				  
 
  if (result === "wrong") {
   state.stats.wrong++;
@@ -412,7 +547,9 @@ function updateProgress(grade) {
     };
     state.progress[current.id]=p;
     state.stats.new++;
-    state.todayNewCount++;
+	
+	  
+    
   } else {
     state.stats.review++;
   }
@@ -436,7 +573,7 @@ function updateProgress(grade) {
 
   if (!failedThisSession.has(current.id)) {
     failedThisSession.add(current.id);
-    learningQueue.push(current);
+    learningQueue.unshift(current);
   }
 
   save();
@@ -599,7 +736,7 @@ const seconds = totalSeconds % 60;
     <div class="center">
       <div class="card">
 
-        <h2>Smart Review – Public Studies</h2>
+        <h2>Smart Review – Junior High ${SUBJECT_LABEL}</h2>
         
         <!-- student name stays centered -->
         <h3 style="text-align:center;">${state.nickname}</h3>
