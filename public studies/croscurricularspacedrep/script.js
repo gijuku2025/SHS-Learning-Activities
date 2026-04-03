@@ -1,5 +1,5 @@
 const app = document.getElementById("app");
-const SUBJECT = "public studies"; // change to "geometry" or "civics" in other copies
+const SUBJECT = "cross curricular"; // change to "geometry" or "civics" in other copies
 const SUBJECT_LABEL = SUBJECT.charAt(0).toUpperCase() + SUBJECT.slice(1);
 
 const CHAPTER_FILES = [
