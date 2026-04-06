@@ -1,5 +1,5 @@
 const app = document.getElementById("app");
-const SUBJECT = "public studies"; // change to "geometry" or "civics" in other copies
+const SUBJECT = "Public Studies"; // change to "geometry" or "civics" in other copies
 const SUBJECT_LABEL = SUBJECT.charAt(0).toUpperCase() + SUBJECT.slice(1);
 
 const CHAPTER_FILES = [
@@ -118,7 +118,7 @@ function showChapterScreen() {
     <div class="center">
       <div class="card">
         <h2 class="heading">Welcome to Smart Review, ${state.nickname}</h2>
-        <h2 class="heading">Junior High ${SUBJECT_LABEL}</h2>   
+        <h2 class="heading">${SUBJECT_LABEL}</h2>   
         <p style="margin:5px 0;">Select chapters</p>
 
         
