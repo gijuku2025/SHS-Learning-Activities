@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Hamlet 1 New Words</title>
+<title>Public Studies Ch 1 New Words</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -60,7 +60,7 @@
 </div>
 
 <div class="container hidden" id="quizScreen">
-  <h1 id="gameTitle">Hamlet 1 New Words</h1>
+  <h1 id="gameTitle">Public Studies Ch 1 New Words</h1>
   <div class="progress-bar"><div id="progressFill"></div></div>
   <div id="questionCounter">Question 1 of 10</div>
   <h1 id="questionTitle">Listen and choose:</h1>
@@ -78,43 +78,26 @@
 <script>
 // ====== Replace with your generated array including MP3 paths ======
 const allWords = [
-  { en: "new king", jp: "新しい王", enAudio: "audio/new_king_en.mp3", jpAudio: "audio/新しい王_jp.mp3" },
-  { en: "married", jp: "結婚した", enAudio: "audio/married_en.mp3", jpAudio: "audio/結婚した_jp.mp3" },
-  { en: "sad", jp: "悲しい", enAudio: "audio/sad_en.mp3", jpAudio: "audio/悲しい_jp.mp3" },
-  { en: "angry", jp: "怒っている", enAudio: "audio/angry_en.mp3", jpAudio: "audio/怒っている_jp.mp3" },
-  { en: "uncle", jp: "叔父", enAudio: "audio/uncle_en.mp3", jpAudio: "audio/叔父_jp.mp3" },
-  { en: "very quickly", jp: "とても早く", enAudio: "audio/very_quickly_en.mp3", jpAudio: "audio/とても早く_jp.mp3" },
-  { en: "ghost", jp: "幽霊", enAudio: "audio/ghost_en.mp3", jpAudio: "audio/幽霊_jp.mp3" },
-  { en: "secret", jp: "秘密", enAudio: "audio/secret_en.mp3", jpAudio: "audio/秘密_jp.mp3" },
-  { en: "snake bite", jp: "ヘビに噛まれること", enAudio: "audio/snake_bite_en.mp3", jpAudio: "audio/ヘビに噛まれること_jp.mp3" },
-  { en: "poison", jp: "毒", enAudio: "audio/poison_en.mp3", jpAudio: "audio/毒_jp.mp3" },
-  { en: "revenge", jp: "復讐", enAudio: "audio/revenge_en.mp3", jpAudio: "audio/復讐_jp.mp3" },
-  { en: "act crazy", jp: "狂ったふりをする", enAudio: "audio/act_crazy_en.mp3", jpAudio: "audio/狂ったふりをする_jp.mp3" },
-  { en: "son", jp: "息子", enAudio: "audio/son_en.mp3", jpAudio: "audio/息子_jp.mp3" },
-  { en: "stepfather", jp: "継父", enAudio: "audio/stepfather_en.mp3", jpAudio: "audio/継父_jp.mp3" },
-  { en: "kin", jp: "親族", enAudio: "audio/kin_en.mp3", jpAudio: "audio/親族_jp.mp3" },
-  { en: "kind", jp: "良い", enAudio: "audio/kind_en.mp3", jpAudio: "audio/良い_jp.mp3" },
-  { en: "feelings", jp: "感情", enAudio: "audio/feelings_en.mp3", jpAudio: "audio/感情_jp.mp3" },
-  { en: "talking to himself", jp: "独り言を言っている", enAudio: "audio/talking_to_himself_en.mp3", jpAudio: "audio/独り言を言っている_jp.mp3" },
-  { en: "remarried", jp: "再婚した", enAudio: "audio/remarried_en.mp3", jpAudio: "audio/再婚した_jp.mp3" },
-  { en: "same month", jp: "同じ月", enAudio: "audio/same_month_en.mp3", jpAudio: "audio/同じ月_jp.mp3" },
-  { en: "hurt", jp: "心が傷ついた", enAudio: "audio/hurt_en.mp3", jpAudio: "audio/心が傷ついた_jp.mp3" },
-  { en: "disgusted", jp: "嫌悪感を感じている", enAudio: "audio/disgusted_en.mp3", jpAudio: "audio/嫌悪感を感じている_jp.mp3" },
-  { en: "quick marriage", jp: "早すぎる結婚", enAudio: "audio/quick_marriage_en.mp3", jpAudio: "audio/早すぎる結婚_jp.mp3" },
-  { en: "moral weakness", jp: "道徳的な弱さ", enAudio: "audio/moral_weakness_en.mp3", jpAudio: "audio/道徳的な弱さ_jp.mp3" },
-  { en: "lack of loyalty", jp: "忠実さの欠如", enAudio: "audio/lack_of_loyalty_en.mp3", jpAudio: "audio/忠実さの欠如_jp.mp3" },
-  { en: "disloyal", jp: "不忠実な", enAudio: "audio/disloyal_en.mp3", jpAudio: "audio/不忠実な_jp.mp3" },
-  { en: "battle", jp: "戦い", enAudio: "audio/battle_en.mp3", jpAudio: "audio/戦い_jp.mp3" },
-  { en: "lands", jp: "領土", enAudio: "audio/lands_en.mp3", jpAudio: "audio/領土_jp.mp3" },
-  { en: "funeral", jp: "葬儀", enAudio: "audio/funeral_en.mp3", jpAudio: "audio/葬儀_jp.mp3" },
-  { en: "spirit", jp: "精神", enAudio: "audio/spirit_en.mp3", jpAudio: "audio/精神_jp.mp3" },
-  { en: "murdered", jp: "殺害された", enAudio: "audio/murdered_en.mp3", jpAudio: "audio/殺害された_jp.mp3" },
-  { en: "sword", jp: "剣", enAudio: "audio/sword_en.mp3", jpAudio: "audio/剣_jp.mp3" },
-  { en: "widow", jp: "未亡人", enAudio: "audio/widow_en.mp3", jpAudio: "audio/未亡人_jp.mp3" },
-  { en: "cousin", jp: "いとこ", enAudio: "audio/cousin_en.mp3", jpAudio: "audio/いとこ_jp.mp3" },
-  { en: "frailty", jp: "脆さ", enAudio: "audio/frailty_en.mp3", jpAudio: "audio/脆さ_jp.mp3" },
-  { en: "obey", jp: "従う", enAudio: "audio/obey_en.mp3", jpAudio: "audio/従う_jp.mp3" },
-  { en: "serpent", jp: "大蛇", enAudio: "audio/serpent_en.mp3", jpAudio: "audio/大蛇_jp.mp3" },
+  { en: "adolescence", jp: "青年期", enAudio: "audio/adolescence_en.mp3", jpAudio: "audio/青年期_jp.mp3" },
+  { en: "puberty", jp: "思春期", enAudio: "audio/puberty_en.mp3", jpAudio: "audio/思春期_jp.mp3" },
+  { en: "sacrifice", jp: "犠牲にする", enAudio: "audio/sacrifice_en.mp3", jpAudio: "audio/犠牲にする_jp.mp3" },
+  { en: "efficiency", jp: "効率", enAudio: "audio/efficiency_en.mp3", jpAudio: "audio/効率_jp.mp3" },
+  { en: "fairness", jp: "公平", enAudio: "audio/fairness_en.mp3", jpAudio: "audio/公平_jp.mp3" },
+  { en: "transition", jp: "転換しながら", enAudio: "audio/transition_en.mp3", jpAudio: "audio/転換しながら_jp.mp3" },
+  { en: "public space", jp: "公共的な空間", enAudio: "audio/public_space_en.mp3", jpAudio: "audio/公共的な空間_jp.mp3" },
+  { en: "agreement", jp: "合意に達する", enAudio: "audio/agreement_en.mp3", jpAudio: "audio/合意に達する_jp.mp3" },
+  { en: "happiness", jp: "幸せ", enAudio: "audio/happiness_en.mp3", jpAudio: "audio/幸せ_jp.mp3" },
+  { en: "society", jp: "社会", enAudio: "audio/society_en.mp3", jpAudio: "audio/社会_jp.mp3" },
+  { en: "conflict", jp: "争い", enAudio: "audio/conflict_en.mp3", jpAudio: "audio/争い_jp.mp3" },
+  { en: "individuals", jp: "個人", enAudio: "audio/individuals_en.mp3", jpAudio: "audio/個人_jp.mp3" },
+  { en: "pursue", jp: "追求する", enAudio: "audio/pursue_en.mp3", jpAudio: "audio/追求する_jp.mp3" },
+  { en: "cooperate", jp: "創ることに協力する", enAudio: "audio/cooperate_en.mp3", jpAudio: "audio/創ることに協力する_jp.mp3" },
+  { en: "childhood", jp: "子供時代", enAudio: "audio/childhood_en.mp3", jpAudio: "audio/子供時代_jp.mp3" },
+  { en: "adulthood", jp: "成人期", enAudio: "audio/adulthood_en.mp3", jpAudio: "audio/成人期_jp.mp3" },
+  { en: "modern-day", jp: "近代の", enAudio: "audio/modernday_en.mp3", jpAudio: "audio/近代の_jp.mp3" },
+  { en: "conditions", jp: "求められる条件", enAudio: "audio/conditions_en.mp3", jpAudio: "audio/求められる条件_jp.mp3" },
+  { en: "expectations", jp: "社会の期待", enAudio: "audio/expectations_en.mp3", jpAudio: "audio/社会の期待_jp.mp3" },
+  { en: "independence", jp: "早期の経済的自立", enAudio: "audio/independence_en.mp3", jpAudio: "audio/早期の経済的自立_jp.mp3" },
 ];
 
 // ====== Quiz logic ======
