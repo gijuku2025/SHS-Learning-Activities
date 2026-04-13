@@ -742,7 +742,7 @@ const seconds = totalSeconds % 60;
     <div class="center">
       <div class="card">
 
-        <h2>Smart Review – Junior High ${SUBJECT_LABEL}</h2>
+        <h2>Smart Review – ${SUBJECT_LABEL}</h2>
         
         <!-- student name stays centered -->
         <h3 style="text-align:center;">${state.nickname}</h3>
