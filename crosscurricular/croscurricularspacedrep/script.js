@@ -17,6 +17,7 @@ const RARE_REVIEW_INTERVAL = 60; // days
 
 let sessionCount = 0;
 let testedCount = 0;
+let learningAttempts = 0;
 
 let failedThisSession = new Set();
 let sessionStartTime = null;
@@ -37,7 +38,7 @@ let learningQueue = [];
 let reviewQueue = [];
 let current = null;
 let direction = null;
-let learningAttempts = 0;
+
 
 
 
