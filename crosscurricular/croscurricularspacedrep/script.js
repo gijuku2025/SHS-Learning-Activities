@@ -29,7 +29,8 @@ let state = {
 progress: JSON.parse(localStorage.getItem(SUBJECT + "_progress") || "{}"),
 todayNewCount: Number(localStorage.getItem(SUBJECT + "_todayNewCount") || 0),
 
-  stats: { correct: 0, wrong: 0, new: 0, review: 0 }
+  stats: JSON.parse(localStorage.getItem(SUBJECT + "_stats") || 
+  '{"correct":0,"wrong":0,"new":0,"review":0}')
 };
 
 let vocab = [];
@@ -47,8 +48,11 @@ let direction = null;
 function save() {
   localStorage.setItem("nickname", state.nickname);
   localStorage.setItem(SUBJECT + "_activeChapters", JSON.stringify(state.activeChapters));
-localStorage.setItem(SUBJECT + "_progress", JSON.stringify(state.progress));
-localStorage.setItem(SUBJECT + "_todayNewCount", state.todayNewCount);
+  localStorage.setItem(SUBJECT + "_progress", JSON.stringify(state.progress));
+  localStorage.setItem(SUBJECT + "_todayNewCount", state.todayNewCount);
+
+  // ✅ ADD THIS LINE
+  localStorage.setItem(SUBJECT + "_stats", JSON.stringify(state.stats));
 }
 
 function todayString() {
@@ -234,6 +238,7 @@ async function startStudy() {
   testedCount = 0;
   failedThisSession = new Set();
   state.stats = { correct: 0, wrong: 0, new: 0, review: 0 };
+  save();
   await loadVocab();
   buildQueues();
   nextQuestion();
@@ -804,6 +809,8 @@ const seconds = totalSeconds % 60;
       </div>
     </div>
   `;
+
+localStorage.removeItem(SUBJECT + "_stats");
 }
 
 
