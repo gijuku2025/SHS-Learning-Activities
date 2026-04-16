@@ -37,6 +37,7 @@ let learningQueue = [];
 let reviewQueue = [];
 let current = null;
 let direction = null;
+let learningAttempts = 0;
 
 
 
@@ -420,7 +421,42 @@ function submitLearningCheck() {
   }
 
   if (!correct) {
-  alert("Try again!");
+  learningAttempts++;
+
+  // ✅ first mistake → try again
+  if (learningAttempts === 1) {
+    alert("Try one more time!");
+    return;
+  }
+
+  // ✅ second mistake → show answer + move on
+  app.innerHTML = `
+    <div class="center">
+      <div class="card">
+
+        <h3 class="feedback-title incorrect">✘ Not quite</h3>
+
+        <div class="feedback-word">
+          <strong>${current.en}</strong> = ${current.jp}
+        </div>
+
+        <div>${current.kana || ""}</div>
+
+        ${current.example ? `<div class="example">${current.example}</div>` : ""}
+
+        <p>We’ll try this again later.</p>
+
+        <button onclick="
+          learningQueue.push(current);
+          sessionCount++;
+          nextQuestion();
+        ">
+          Continue
+        </button>
+
+      </div>
+    </div>
+  `;
   return;
 }
 
