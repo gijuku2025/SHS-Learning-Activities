@@ -1,0 +1,144 @@
+
+[
+  {
+    "id": "hamlet_ch2_odd",
+    "en": "odd",
+    "jp": "奇妙な",
+    "kana": "きみょうな",
+    "example": "Hamlet acts odd."
+  },
+  {
+    "id": "hamlet_ch2_mad",
+    "en": "mad",
+    "jp": "狂った",
+    "kana": "くるった",
+    "example": "People think he is mad."
+  },
+  {
+    "id": "hamlet_ch2_frightened",
+    "en": "frightened",
+    "jp": "怯えている",
+    "kana": "おびえている",
+    "example": "She looks frightened."
+  },
+  {
+    "id": "hamlet_ch2_spy",
+    "en": "spy",
+    "jp": "スパイする",
+    "kana": "すぱいする",
+    "example": "They spy on him."
+  },
+  {
+    "id": "hamlet_ch2_conscience",
+    "en": "conscience",
+    "jp": "良心",
+    "kana": "りょうしん",
+    "example": "The play tests his conscience."
+  },
+  {
+    "id": "hamlet_ch2_believe",
+    "en": "believe",
+    "jp": "信じる",
+    "kana": "しんじる",
+    "example": "He believes the story."
+  },
+  {
+    "id": "hamlet_ch2_refuse",
+    "en": "refuse",
+    "jp": "拒む",
+    "kana": "こばむ",
+    "example": "She refuses to meet him."
+  },
+  {
+    "id": "hamlet_ch2_prove",
+    "en": "prove",
+    "jp": "証明する",
+    "kana": "しょうめいする",
+    "example": "He wants to prove the truth."
+  },
+  {
+    "id": "hamlet_ch2_theory",
+    "en": "theory",
+    "jp": "説（理論）",
+    "kana": "せつ（りろん）",
+    "example": "They discuss a theory."
+  },
+  {
+    "id": "hamlet_ch2_watch",
+    "en": "watch",
+    "jp": "観察する",
+    "kana": "かんさつする",
+    "example": "They watch carefully."
+  },
+  {
+    "id": "hamlet_ch2_realise",
+    "en": "realise",
+    "jp": "気づく",
+    "kana": "きづく",
+    "example": "He realises the truth."
+  },
+  {
+    "id": "hamlet_ch2_worried",
+    "en": "worried",
+    "jp": "心配している",
+    "kana": "しんぱいしている",
+    "example": "They are worried about him."
+  },
+  {
+    "id": "hamlet_ch2_castle",
+    "en": "castle",
+    "jp": "城",
+    "kana": "しろ",
+    "example": "The events happen in the castle."
+  },
+  {
+    "id": "hamlet_ch2_guilty",
+    "en": "guilty",
+    "jp": "有罪の",
+    "kana": "ゆうざいの",
+    "example": "He may be guilty."
+  },
+  {
+    "id": "hamlet_ch2_perform",
+    "en": "perform",
+    "jp": "上演する",
+    "kana": "じょうえんする",
+    "example": "The actors perform a play."
+  },
+  {
+    "id": "hamlet_ch2_murder",
+    "en": "murder",
+    "jp": "殺人",
+    "kana": "さつじん",
+    "example": "The play shows a murder."
+  },
+  {
+    "id": "hamlet_ch2_cruel",
+    "en": "cruel",
+    "jp": "残酷な",
+    "kana": "ざんこくな",
+    "example": "His words sound cruel."
+  },
+  {
+    "id": "hamlet_ch2_dangerous",
+    "en": "dangerous",
+    "jp": "危険な",
+    "kana": "きけんな",
+    "example": "They think he is dangerous."
+  },
+  {
+    "id": "hamlet_ch2_immediately",
+    "en": "immediately",
+    "jp": "すぐに",
+    "kana": "すぐに",
+    "example": "He must leave immediately."
+  },
+  {
+    "id": "hamlet_ch2_send_away",
+    "en": "send away",
+    "jp": "送り出す",
+    "kana": "おくりだす",
+    "example": "They send him away."
+  }
+]
+
