@@ -19,7 +19,6 @@ let sessionCount = 0;
 let testedCount = 0;
 let learningAttempts = 0;
 
-
 let failedThisSession = new Set();
 let sessionStartTime = null;
 
@@ -40,6 +39,8 @@ let learningQueue = [];
 let reviewQueue = [];
 let current = null;
 let direction = null;
+
+
 
 
 
@@ -124,7 +125,7 @@ function showChapterScreen() {
     <div class="center">
       <div class="card">
         <h2 class="heading">Welcome to Smart Review, ${state.nickname}</h2>
-        <h2 class="heading">${SUBJECT_LABEL}</h2>   
+        <h2 class="heading">Junior High ${SUBJECT_LABEL}</h2>   
         <p style="margin:5px 0;">Select chapters</p>
 
         
@@ -240,8 +241,18 @@ async function startStudy() {
   state.stats = { correct: 0, wrong: 0, new: 0, review: 0 };
   save();
   await loadVocab();
-  buildQueues();
-  nextQuestion();
+
+buildQueues();
+
+console.log("Preview:", previewQueue.length);
+console.log("Learning:", learningQueue.length);
+console.log("Review:", reviewQueue.length);
+
+if (!hasStudyItems()) {
+  forceReviewSession();
+}
+
+nextQuestion();
 }
 
 function buildQueues() {
@@ -283,6 +294,40 @@ save();
 }
 
 
+function hasStudyItems() {
+  return (
+    previewQueue.length > 0 ||
+    learningQueue.length > 0 ||
+    reviewQueue.length > 0
+  );
+}
+
+function forceReviewSession() {
+
+  const candidates = vocab
+    .filter(item => state.progress[item.id])
+    .sort((a, b) => {
+      const pa = state.progress[a.id];
+      const pb = state.progress[b.id];
+      return pa.nextReview - pb.nextReview;
+    });
+
+  reviewQueue = candidates.slice(
+  0,
+  Math.min(20, MAX_ITEMS_PER_SESSION)
+);
+
+  console.log("FORCED REVIEW ACTIVATED");
+}		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
  function renderProgress() {
   const remaining =
@@ -325,7 +370,19 @@ function nextQuestion() {
   !previewQueue.length &&
   !reviewQueue.length &&
   !learningQueue.length
-) return showResults();
+) {
+
+  // try emergency review before ending session
+  forceReviewSession();
+
+  if (
+    !previewQueue.length &&
+    !reviewQueue.length &&
+    !learningQueue.length
+  ) {
+    return showResults();
+  }
+}
 
 // 🔹 NEW: Preview phase comes first
 if (previewQueue.length) {
@@ -784,7 +841,7 @@ const seconds = totalSeconds % 60;
     <div class="center">
       <div class="card">
 
-        <h2>Smart Review – ${SUBJECT_LABEL}</h2>
+        <h2>Smart Review – Junior High ${SUBJECT_LABEL}</h2>
         
         <!-- student name stays centered -->
         <h3 style="text-align:center;">${state.nickname}</h3>
@@ -811,7 +868,6 @@ const seconds = totalSeconds % 60;
   `;
 
 localStorage.removeItem(SUBJECT + "_stats");
-
 }
 
 
