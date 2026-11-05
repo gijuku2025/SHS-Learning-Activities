@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Civics Othello – Face to Face</title>
+<style>
+:root{
+  --bg:#0f1f18; --panel:#1a2a22; --felt:#1f6b45; --felt-dark:#154d31;
+  --ink:#16130f; --ivory:#f4efe2; --brass:#e0a93b; --good:#58c487; --bad:#e2685a; --muted:#9db3a5;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--ivory);
+  font-family:ui-rounded,"Hiragino Maru Gothic ProN","Hiragino Sans",system-ui,sans-serif;
+  touch-action:manipulation;overscroll-behavior:none;overflow:hidden}
+body{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+[hidden]{display:none!important}
+button{font:inherit;color:inherit;cursor:pointer}
+.screen{height:100%;display:flex;align-items:center;justify-content:center;padding:24px}
+
+/* setup + end */
+.card{background:var(--panel);border-radius:20px;padding:34px 40px;width:min(580px,100%);display:grid;gap:16px}
+h1{margin:0;font-size:36px}
+.sub{margin:0;color:var(--muted);font-size:18px;line-height:1.4}
+label{display:grid;gap:6px;font-size:18px;color:var(--muted)}
+input,select{font:inherit;font-size:22px;padding:14px 16px;border-radius:12px;border:2px solid #34493e;background:#101b15;color:var(--ivory);width:100%}
+.names{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.big{font-size:26px;font-weight:700;padding:18px;border:0;border-radius:14px;background:var(--brass);color:var(--ink)}
+.big:active{transform:scale(.98)}
+.flipped{transform:rotate(180deg)}
+.dot{display:inline-block;width:.8em;height:.8em;border-radius:50%;vertical-align:-.05em;margin-right:.35em}
+.d1{background:radial-gradient(circle at 35% 30%,#555,#0b0b0b)}
+.d2{background:radial-gradient(circle at 35% 30%,#fff,#cfcabb)}
+
+/* game: top panel (player 2, rotated) / board / bottom panel (player 1) */
+#game{height:100%;display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:8px;padding:8px}
+#mid{display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:0}
+#boardWrap{flex:none}
+#board{width:100%;height:100%;display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);
+  gap:2px;background:var(--felt-dark);padding:6px;border-radius:14px;border:4px solid #3a2a1a}
+.cell{position:relative;background:var(--felt);border:0;border-radius:3px;padding:0;display:flex;align-items:center;justify-content:center}
+.bead{width:84%;height:84%;border-radius:50%;box-shadow:0 3px 5px rgba(0,0,0,.45)}
+.bead.b1{background:radial-gradient(circle at 35% 30%,#5a5a5a,#0b0b0b 70%)}
+.bead.b2{background:radial-gradient(circle at 35% 30%,#fff,#cfcabb 75%)}
+.bead.flip{animation:flip .5s ease}
+@keyframes flip{0%{transform:scaleX(1)}50%{transform:scaleX(.05)}100%{transform:scaleX(1)}}
+.cell.legal::after{content:"";width:34%;height:34%;border-radius:50%;background:var(--brass);box-shadow:0 0 0 6px rgba(224,169,59,.3);animation:pulse 1.1s ease-in-out infinite alternate}
+@keyframes pulse{to{transform:scale(1.2)}}
+.cell.last{outline:3px solid var(--brass);outline-offset:-3px}
+
+.panel{background:var(--panel);border-radius:16px;padding:10px 14px;display:grid;gap:8px;border:3px solid transparent}
+.panel.top{transform:rotate(180deg)}
+.panel.on{border-color:var(--brass)}
+.panel:not(.on) .text{color:var(--muted)}
+.row1{display:flex;gap:14px;align-items:center;min-height:56px}
+.chip{flex:none;display:flex;align-items:center;gap:10px;background:#101b15;border-radius:12px;padding:8px 14px;font-size:20px;max-width:240px}
+.chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chip b{font-size:32px;line-height:1}
+.text{flex:1;min-width:0;font-size:25px;font-weight:700;line-height:1.2}
+.text small{display:block;font-size:17px;font-weight:400;color:var(--muted);margin-top:2px}
+.text.good{color:var(--good)} .text.bad{color:var(--bad)}
+.row2{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:10px;min-height:58px}
+.panel.idle .row2{visibility:hidden}
+.ans{min-height:58px;font-size:21px;padding:8px 12px;border-radius:12px;border:3px solid #34493e;background:#101b15;text-align:center}
+.ans:active{background:#233a2e}
+.ans.right{background:#1f5a3a;border-color:var(--good)}
+.ans.wrong{background:#5a2620;border-color:var(--bad)}
+.ans:disabled{opacity:1}
+.next{grid-column:1/-1;min-height:58px}
+
+@media (orientation:portrait){
+  .row2{grid-template-columns:1fr 1fr}
+  .row2 .ans:last-child:nth-child(odd){grid-column:1/-1}
+  .text{font-size:23px}
+}
+
+.card.wide{width:min(1000px,100%);max-height:100%}
+.pickhead{display:flex;align-items:center;gap:10px;font-size:20px}
+.pickhead #count{flex:1;color:var(--muted);font-size:17px}
+.mini{font-size:17px;padding:8px 16px;border-radius:10px;border:2px solid #34493e;background:#101b15}
+#chapters{overflow-y:auto;-webkit-overflow-scrolling:touch;max-height:calc(100vh - 380px);min-height:110px;padding-right:4px}
+.grp{display:block;width:100%;text-align:left;background:none;border:0;font-size:19px;font-weight:700;color:var(--brass);padding:8px 2px 4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:2px 0 10px}
+.chap{min-height:66px;text-align:left;border-radius:12px;border:3px solid #34493e;background:#101b15;padding:8px 12px;font-size:17px;display:flex;flex-direction:column;gap:2px}
+.chap b{font-weight:700;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.chap small{color:var(--muted);font-size:14px}
+.chap.on{border-color:var(--brass);background:#2b3a22}
+.chap.on small::before{content:"\2713  "}
+.sub.bad{color:var(--bad)}
+.big:disabled{opacity:.4}
+
+.timer{flex:none;font-size:34px;font-weight:700;font-variant-numeric:tabular-nums;background:#101b15;border-radius:12px;padding:6px 14px;min-width:96px;text-align:center}
+.timer.low{color:var(--bad)}
+@media (prefers-reduced-motion:reduce){.bead.flip,.cell.legal::after{animation:none}}
+</style>
+</head>
+<body>
+
+<section id="setup" class="screen">
+  <div class="card wide">
+    <h1>Civics Othello</h1>
+    <p class="sub">Lay the iPad flat between you. Player 1 sits at the bottom edge, Player 2 at the top. Answer correctly to place a bead; answer wrongly and you lose your turn. One shared timer runs for the whole game: when it reaches zero, the player with more beads wins.</p>
+    <div class="names">
+      <label>Player 1 (black, bottom)<input id="n1" value="Player 1" maxlength="14" autocomplete="off"></label>
+      <label>Player 2 (white, top)<input id="n2" value="Player 2" maxlength="14" autocomplete="off"></label>
+    </div>
+    <div class="pickhead"><span>Chapters</span><span id="count"></span><button class="mini" id="all">All</button><button class="mini" id="none">None</button></div>
+    <div id="chapters"><p class="sub">Loading questions…</p></div>
+    <p class="sub" id="warn"></p>
+    <button class="big" id="start" disabled>Start game</button>
+  </div>
+</section>
+
+<section id="game" hidden>
+  <div class="panel top" id="p2"></div>
+  <div id="mid"><div id="boardWrap"><div id="board"></div></div></div>
+  <div class="panel" id="p1"></div>
+</section>
+
+<section id="end" class="screen" hidden>
+  <div class="card">
+    <h1 class="flipped" id="win2"></h1>
+    <p class="sub flipped" id="final2"></p>
+    <h1 id="win"></h1>
+    <p class="sub" id="final"></p>
+    <button class="big" id="again">Play again</button>
+    <button class="big" id="menu" style="background:#34493e;color:var(--ivory)">Change players or set</button>
+  </div>
+</section>
+
+<script>
+
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const DIRS=[[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]];
+
+let board,cur,names=["",""],deck=[],pool=[],state="idle",legal=[],lastIdx=-1,current=null,msg="",msgCls="";
+
+
+/* board */
+const boardEl=$("board"),cells=[];
+for(let i=0;i<64;i++){
+  const c=document.createElement("button");c.className="cell";c.setAttribute("aria-label","square "+(i+1));
+  c.addEventListener("click",()=>tapCell(i));boardEl.appendChild(c);cells.push(c);
+}
+
+/* two player panels */
+const P={};
+[1,2].forEach(p=>{
+  const el=$("p"+p);
+  el.innerHTML='<div class="row1"><div class="chip"></div><div class="text"></div><div class="timer">3:00</div></div><div class="row2"></div>';
+  P[p]={el,chip:el.querySelector(".chip"),text:el.querySelector(".text"),row:el.querySelector(".row2")};
+});
+
+function flipsAt(b,i,p){
+  if(b[i])return[];
+  const x=i%8,y=(i/8)|0,out=[];
+  for(const[dx,dy]of DIRS){
+    const line=[];let cx=x+dx,cy=y+dy;
+    while(cx>=0&&cx<8&&cy>=0&&cy<8&&b[cy*8+cx]===3-p){line.push(cy*8+cx);cx+=dx;cy+=dy}
+    if(line.length&&cx>=0&&cx<8&&cy>=0&&cy<8&&b[cy*8+cx]===p)out.push(...line);
+  }
+  return out;
+}
+const movesFor=p=>{const m=[];for(let i=0;i<64;i++)if(flipsAt(board,i,p).length)m.push(i);return m};
+const count=p=>board.filter(v=>v===p).length;
+const show=id=>{["setup","game","end"].forEach(s=>$(s).hidden=s!==id);fit()};
+
+function fit(){
+  const m=$("mid"),s=Math.floor(Math.min(m.clientWidth,m.clientHeight));
+  $("boardWrap").style.width=$("boardWrap").style.height=Math.max(s,0)+"px";
+}
+addEventListener("resize",fit);addEventListener("orientationchange",()=>setTimeout(fit,200));
+
+function startGame(){
+  names=[$("n1").value.trim()||"Player 1",$("n2").value.trim()||"Player 2"];
+  pool=CHAPTERS.filter(c=>sel.has(c.id)).flatMap(c=>c.questions);
+  if(!pool.length)return;
+  LS.set("qc-sel",[...sel]);LS.set("qc-names",[$("n1").value,$("n2").value]);
+  deck=[];board=Array(64).fill(0);
+  board[27]=2;board[28]=1;board[35]=1;board[36]=2;
+  cur=1;lastIdx=-1;legal=[];
+  show("game");startTimer();turn();
+}
+
+function renderBoard(flipped=[]){
+  cells.forEach((c,i)=>{
+    c.innerHTML="";
+    if(board[i]){const b=document.createElement("div");b.className="bead b"+board[i]+(flipped.includes(i)?" flip":"");c.appendChild(b)}
+    c.classList.toggle("legal",legal.includes(i));
+    c.classList.toggle("last",i===lastIdx);
+  });
+}
+
+/* paint both panels from current state */
+function paint(){
+  [1,2].forEach(p=>{
+    const o=P[p],mine=p===cur;
+    o.el.classList.toggle("on",mine);
+    o.el.classList.toggle("idle",!mine);
+    o.chip.innerHTML=`<i class="dot d${p}"></i><span></span><b>${count(p)}</b>`;
+    o.chip.querySelector("span").textContent=names[p-1];
+    const t=o.text;t.className="text";
+    if(mine&&(state==="ask")){
+      t.textContent=current.q;
+    }else if(!mine&&(state==="ask"||state==="place")){
+      t.textContent=`Waiting for ${names[cur-1]}…`;
+    }else{
+      t.textContent=msg;t.classList.add(msgCls);
+    }
+    o.row.innerHTML="";
+  });
+  const a=P[cur].row;a.style.setProperty("--n",answers.length);
+  if(state==="ask"||state==="place"){
+    answers.forEach(x=>{
+      const b=document.createElement("button");b.className="ans";b.textContent=x.t;
+      if(state==="place"){b.disabled=true;if(x.t===current.a)b.classList.add("right")}
+      else b.addEventListener("click",()=>answer(b,x.t));
+      a.appendChild(b);
+    });
+  }else if(state!=="over"){
+    const n=document.createElement("button");n.className="big next";
+    n.textContent=state==="pass"?"Continue":"Next player";
+    n.addEventListener("click",nextPlayer);a.appendChild(n);
+  }
+  renderBoard(flippedNow);flippedNow=[];
+  fit();
+}
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let answers=[],flippedNow=[];
+
+function turn(){
+  legal=[];
+  if(!movesFor(cur).length){
+    if(!movesFor(3-cur).length)return finish();
+    state="pass";msg=`${names[cur-1]} has no legal squares. The turn passes.`;msgCls="";
+    return paint();
+  }
+  if(!deck.length)deck=shuffle(pool);
+  current=deck.pop();
+  answers=shuffle([current.a,...shuffle(current.w).slice(0,3)]).map(t=>({t}));
+  state="ask";msg="";msgCls="";
+  paint();
+}
+
+function answer(btn,o){
+  if(state!=="ask")return;
+  if(o===current.a){
+    legal=movesFor(cur);state="place";
+    msg="Correct! Tap a glowing square to place your bead.";msgCls="good";
+    paint();
+  }else{
+    state="wrong";
+    msg=`Not quite. The answer is "${current.a}". You lose this turn.`;msgCls="bad";
+    paint();
+  }
+}
+
+function tapCell(i){
+  if(state!=="place"||!legal.includes(i))return;
+  const f=flipsAt(board,i,cur);
+  board[i]=cur;f.forEach(k=>board[k]=cur);
+  legal=[];lastIdx=i;flippedNow=f.concat(i);
+  state="busy";
+  msg=`${names[cur-1]} flipped ${f.length} bead${f.length>1?"s":""}.`;msgCls="good";
+  if(timeUp){state="over";msg+=" Time's up!";paint();setTimeout(()=>finish("time"),1500);return}
+  paint();
+}
+
+function nextPlayer(){
+  if(state==="busy"||state==="wrong"||state==="pass"){cur=3-cur;turn()}
+}
+
+function finish(reason){
+  stopTimer();
+  const a=count(1),b=count(2);
+  const w=a===b?"It's a draw!":`${names[a>b?0:1]} wins!`;
+  const f=(reason==="time"?"Time's up!  ":"")+`${names[0]} (black): ${a}   ·   ${names[1]} (white): ${b}`;
+  $("win").textContent=$("win2").textContent=w;
+  $("final").textContent=$("final2").textContent=f;
+  show("end");
+}
+
+
+/* ---------- shared game timer ---------- */
+let endAt=0,tick=null,timeUp=false,limit=180;
+const fmt=ms=>{const t=Math.max(0,Math.ceil(ms/1000));return Math.floor(t/60)+":"+String(t%60).padStart(2,"0")};
+function stopTimer(){clearInterval(tick);tick=null}
+function startTimer(){
+  stopTimer();timeUp=false;endAt=Date.now()+limit*1000;
+  tick=setInterval(onTick,250);onTick();
+}
+function onTick(){
+  const left=endAt-Date.now();
+  document.querySelectorAll(".timer").forEach(t=>{t.textContent=fmt(left);t.classList.toggle("low",left<=30000)});
+  if(left>0||timeUp)return;
+  timeUp=true;
+  if(state==="place"){msg="Time's up! Place this last bead.";msgCls="bad";paint()}
+  else finish("time");
+}
+
+/* ---------- load quiz sets from civics.json ---------- */
+let CHAPTERS=[],sel=new Set();
+const LS={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+function updateCount(){
+  const ch=CHAPTERS.filter(c=>sel.has(c.id));
+  const n=ch.reduce((t,c)=>t+c.questions.length,0);
+  $("count").textContent=`${ch.length} chapter${ch.length===1?"":"s"} · ${n} questions · timer ${fmt(limit*1000)}`;
+  $("start").disabled=!n;
+  document.querySelectorAll(".chap").forEach(b=>b.classList.toggle("on",sel.has(b.dataset.id)));
+}
+function buildChapters(){
+  const box=$("chapters");box.innerHTML="";
+  const grid=document.createElement("div");grid.className="grid";
+  CHAPTERS.forEach(c=>{
+    const b=document.createElement("button");b.className="chap";b.dataset.id=c.id;
+    b.innerHTML="<b></b><small></small>";
+    b.firstChild.textContent=c.title;b.lastChild.textContent=c.questions.length+" questions";
+    b.addEventListener("click",()=>{sel.has(c.id)?sel.delete(c.id):sel.add(c.id);updateCount()});
+    grid.appendChild(b);
+  });
+  box.appendChild(grid);updateCount();
+}
+async function load(){
+  const nm=LS.get("qc-names");if(Array.isArray(nm)){$("n1").value=nm[0]||"Player 1";$("n2").value=nm[1]||"Player 2"}
+  try{
+    const r=await fetch("civics.json",{cache:"no-cache"});
+    if(!r.ok)throw new Error("HTTP "+r.status);
+    const data=await r.json();
+    const list=Array.isArray(data)?data:data.chapters;
+    if(!Array.isArray(data)&&Number(data.timeLimit)>0)limit=Math.round(Number(data.timeLimit));
+    if(!Array.isArray(list))throw new Error('the file needs a "chapters" list');
+    let skipped=0;const seen=new Set();
+    CHAPTERS=list.map((c,n)=>{
+      let id=String(c.id??n+1);if(seen.has(id))id+="_"+n;seen.add(id);
+      const qs=(Array.isArray(c.questions)?c.questions:[]).filter(q=>{
+        const ok=q&&typeof q.q==="string"&&typeof q.a==="string"&&Array.isArray(q.w)&&q.w.length>0&&q.w.every(x=>typeof x==="string");
+        if(!ok)skipped++;return ok;
+      });
+      return{id,title:String(c.title||"Chapter "+(n+1)),subject:String(c.subject||""),questions:qs};
+    }).filter(c=>c.questions.length);
+    if(!CHAPTERS.length)throw new Error("no usable questions found");
+    (LS.get("qc-sel")||[]).forEach(id=>{if(CHAPTERS.some(c=>c.id===id))sel.add(id)});
+    buildChapters();
+    if(skipped)$("warn").textContent=`${skipped} question${skipped>1?"s":""} in civics.json were skipped because they are incomplete.`;
+  }catch(e){
+    $("chapters").innerHTML="";
+    const p=document.createElement("p");p.className="sub bad";
+    p.textContent=`Couldn't load civics.json (${e.message}). Keep it in the same folder as this page and open the game from your GitHub Pages link, not by double-clicking the file.`;
+    $("chapters").appendChild(p);
+  }
+}
+$("all").addEventListener("click",()=>{CHAPTERS.forEach(c=>sel.add(c.id));updateCount()});
+$("none").addEventListener("click",()=>{sel.clear();updateCount()});
+load();
+
+
+/* try to enter full screen when Start is tapped (iPad Safari allows it from a tap) */
+function goFull(){
+  try{
+    if(document.fullscreenElement||document.webkitFullscreenElement)return;
+    const d=document.documentElement,f=d.requestFullscreen||d.webkitRequestFullscreen;
+    if(f){const r=f.call(d);if(r&&r.catch)r.catch(()=>{})}
+  }catch(e){}
+}
+["fullscreenchange","webkitfullscreenchange"].forEach(ev=>document.addEventListener(ev,()=>setTimeout(fit,250)));
+$("start").addEventListener("click",()=>{goFull();startGame()});
+$("again").addEventListener("click",startGame);
+$("menu").addEventListener("click",()=>{stopTimer();show("setup")});
+document.addEventListener("gesturestart",e=>e.preventDefault());
+</script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+{
+  "timeLimit": 180,
+  "chapters": [
+    {
+      "id": "ch1",
+      "title": "Ch.1 The Politics of Recognition",
+      "questions": [
+        {
+          "q": "What is identity, according to Taylor?",
+          "a": "A person's understanding of who they are",
+          "w": [
+            "A person's position in society",
+            "The way a person dresses",
+            "The laws and traditions of a country"
+          ]
+        },
+        {
+          "q": "How is a person's identity partly shaped?",
+          "a": "By recognition and the opinions of others",
+          "w": [
+            "Only by their own decisions",
+            "Only by their family background",
+            "By their economic situation"
+          ]
+        },
+        {
+          "q": "What is misrecognition?",
+          "a": "Seeing a person or group through a false or negative image",
+          "w": [
+            "Treating everyone in exactly the same way",
+            "Giving people too many opportunities",
+            "Refusing to agree with someone's opinions"
+          ]
+        },
+        {
+          "q": "Why can misrecognition be harmful?",
+          "a": "It can cause people to develop a negative image of themselves.",
+          "w": [
+            "It can make people lose interest in politics.",
+            "It can cause people to question every social rule.",
+            "It can prevent people from learning about other cultures."
+          ]
+        },
+        {
+          "q": "What does it mean to internalize a negative image?",
+          "a": "To begin believing negative ideas about yourself",
+          "w": [
+            "To understand why other people have different opinions",
+            "To refuse to listen to criticism",
+            "To change your identity to fit into a new society"
+          ]
+        },
+        {
+          "q": "Taylor discusses the experiences of women. What problem does he identify?",
+          "a": "Some women began to believe that they were inferior to men.",
+          "w": [
+            "Women were given too many opportunities.",
+            "Women were encouraged to become political leaders.",
+            "Women were unable to understand their own identities."
+          ]
+        },
+        {
+          "q": "According to Taylor, why might people struggle to use new opportunities even after social barriers are removed?",
+          "a": "They may have internalized negative beliefs about themselves.",
+          "w": [
+            "They may not have enough education.",
+            "They may prefer traditional social hierarchies.",
+            "They may not want to compete with other people."
+          ]
+        },
+        {
+          "q": "What example does Taylor give concerning Black people in white society?",
+          "a": "Society projected negative images of them, which some began to believe.",
+          "w": [
+            "They were encouraged to reject their cultural identities.",
+            "They were given more opportunities than other groups.",
+            "They were expected to adopt European traditions."
+          ]
+        },
+        {
+          "q": "What does Taylor say about the treatment of Indigenous and colonized people?",
+          "a": "Europeans often described them as inferior and uncivilized.",
+          "w": [
+            "They were generally recognized as equal by European societies.",
+            "They were encouraged to preserve their identities.",
+            "They were responsible for creating negative stereotypes about Europeans."
+          ]
+        },
+        {
+          "q": "According to Taylor, is recognition simply a matter of good manners?",
+          "a": "No. It is a vital human need.",
+          "w": [
+            "Yes. It means being polite to everyone.",
+            "Yes. It means avoiding disagreements with others.",
+            "No. It is only important for minority groups."
+          ]
+        }
+      ]
+    }
+  ]
+}
